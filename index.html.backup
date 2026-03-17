@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>A.M. Rieta Corporation — Personal Care ODM Partner</title>
+  <meta name="description" content="Trusted ODM manufacturer of personal care, skin care, and household products. ISO 22716:2007 & FDA GMP certified. Partnering with brands for over 25 years." />
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    /* Animate utility */
+    .animate { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .animate.visible { opacity: 1; transform: translateY(0); }
+    .animate-delay-1 { transition-delay: 0.1s; }
+    .animate-delay-2 { transition-delay: 0.2s; }
+    .animate-delay-3 { transition-delay: 0.3s; }
+    .animate-delay-4 { transition-delay: 0.4s; }
+    .hero .animate { opacity: 1; transform: none; }
+  </style>
+</head>
+<body>
+
+<!-- ========== HEADER ========== -->
+<header class="site-header">
+  <div class="header-inner">
+    <a href="index.html" class="logo">
+      <img src="images/amr-logo.png" alt="A.M. Rieta Corporation" class="logo-img" />
+    </a>
+    <nav class="main-nav" aria-label="Main navigation">
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="services.html">Our Services</a></li>
+        <li><a href="products.html">Product Lines</a></li>
+        <li><a href="quality.html">Quality &amp; Facilities</a></li>
+        <li><a href="contact.html">Contact Us</a></li>
+      </ul>
+    </nav>
+    <div class="header-cta">
+      <a href="contact.html" class="btn btn-primary">Partner With Us</a>
+      <button class="hamburger" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- ========== HERO ========== -->
+<section class="hero" id="homeHeroTimed">
+  <div class="hero-bg-slides" aria-hidden="true">
+    <div class="hero-bg-slide active" style="background-image:url('Images/index/IMG_6738.jpg');"></div>
+    <div class="hero-bg-slide" style="background-image:url('Images/index/IMG_6747.jpg');"></div>
+    <div class="hero-bg-slide" style="background-image:url('Images/index/IMG_6771.jpg');"></div>
+    <div class="hero-bg-slide" style="background-image:url('Images/index/IMG_6842.jpg');"></div>
+    <div class="hero-bg-slide" style="background-image:url('Images/index/Production.jpg');"></div>
+    <div class="hero-bg-slide" style="background-image:url('Images/index/Warehouse.JPG');"></div>
+  </div>
+  <div class="hero-inner">
+    <div class="hero-content">
+      <div class="hero-badge">Trusted Since 1999 · Est. in the Philippines</div>
+      <h1>Bringing Your Personal Care Brand to <em>Life—From Concept to Shelf.</em></h1>
+      <p class="hero-sub">Partnering with leading and emerging brands for over 25 years to deliver confidence, quality, and innovation through end-to-end product development.</p>
+      <div class="hero-timed-details" id="heroTimedDetails">
+        <div class="hero-timed-place" id="heroTimedPlace">Personal Care Manufacturing</div>
+        <div class="hero-timed-title" id="heroTimedTitle">FORMULATION TO FINISH</div>
+      </div>
+      <div class="hero-actions">
+        <a href="contact.html" class="btn btn-primary btn-lg">Partner With Us Today</a>
+        <a href="services.html" class="btn btn-outline-light btn-lg">Explore Our Services</a>
+      </div>
+      <div class="hero-timed-progress">
+        <div class="hero-timed-progress-bar" id="heroTimedProgress"></div>
+      </div>
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <div class="hero-stat-num">25+</div>
+          <div class="hero-stat-label">Years of Excellence</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-num">7</div>
+          <div class="hero-stat-label">Product Categories</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-num">2</div>
+          <div class="hero-stat-label">Major Certifications</div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-timed-stack" id="heroTimedStack">
+        <div class="hero-mini-card active" data-place="Personal Care Manufacturing" data-title="FORMULATION TO FINISH" style="background-image:url('Images/index/IMG_6738.jpg');">
+          <div class="hero-mini-card-overlay">
+            <span>Personal Care Manufacturing</span>
+          </div>
+        </div>
+        <div class="hero-mini-card" data-place="R&amp;D and Laboratory" data-title="SCIENCE-DRIVEN DEVELOPMENT" style="background-image:url('Images/index/IMG_6747.jpg');">
+          <div class="hero-mini-card-overlay">
+            <span>R&amp;D and Laboratory</span>
+          </div>
+        </div>
+        <div class="hero-mini-card" data-place="Automated Filling Lines" data-title="CONSISTENT PRODUCTION" style="background-image:url('Images/index/IMG_6771.jpg');">
+          <div class="hero-mini-card-overlay">
+            <span>Automated Filling Lines</span>
+          </div>
+        </div>
+        <div class="hero-mini-card" data-place="Quality Assurance" data-title="CALIBRATED FOR EXCELLENCE" style="background-image:url('Images/index/IMG_6842.jpg');">
+          <div class="hero-mini-card-overlay">
+            <span>Quality Assurance</span>
+          </div>
+        </div>
+        <div class="hero-mini-card" data-place="Production Facility" data-title="BUILT FOR SCALE" style="background-image:url('Images/index/Production.jpg');">
+          <div class="hero-mini-card-overlay">
+            <span>Production Facility</span>
+          </div>
+        </div>
+        <div class="hero-mini-card" data-place="Warehousing &amp; Logistics" data-title="READY FOR DELIVERY" style="background-image:url('Images/index/Warehouse.JPG');">
+          <div class="hero-mini-card-overlay">
+            <span>Warehousing &amp; Logistics</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== WHY CHOOSE A.M. RIETA ========== -->
+<section class="section section--gray">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-label">Why Choose Us</span>
+      <h2>Why Choose A.M. Rieta?</h2>
+      <p>We combine decades of formulation expertise with rigorous quality standards to deliver products your customers will trust.</p>
+      <div class="divider"></div>
+    </div>
+    <div class="features-grid">
+      <div class="feature-card animate animate-delay-1">
+        <div class="feature-icon">🏅</div>
+        <h3>ISO 22716:2007 Certified</h3>
+        <p>Adhering to internationally recognized standards for quality, safety, and hygiene in cosmetic manufacturing—ensuring every product meets global benchmarks.</p>
+      </div>
+      <div class="feature-card animate animate-delay-2">
+        <div class="feature-icon">🔬</div>
+        <h3>FDA GMP-Compliant</h3>
+        <p>Certified by the Philippine FDA for both drug and cosmetic production. Our facilities and processes are regularly audited to maintain full regulatory compliance.</p>
+      </div>
+      <div class="feature-card animate animate-delay-3">
+        <div class="feature-icon">🔄</div>
+        <h3>End-to-End Solutions</h3>
+        <p>Full regulatory support, custom formulations, packaging consultation, and private labeling—a single partner for your entire product journey from concept to shelf.</p>
+      </div>
+      <div class="feature-card animate animate-delay-4">
+        <div class="feature-icon">🌱</div>
+        <h3>Flexible &amp; Ethical</h3>
+        <p>Accommodating various order volumes while prioritizing sustainable and ethical sourcing of high-quality raw materials that meet your brand's standards.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== TRUST & LEGACY ========== -->
+<section class="legacy-section">
+  <div class="container">
+    <div class="legacy-inner">
+      <div class="legacy-content">
+        <span class="section-label">Our Legacy</span>
+        <h2>25 Years of Trust &amp; Manufacturing Excellence</h2>
+        <p>Established in 1999, A.M. Rieta has grown from humble beginnings into a trusted, state-of-the-art Original Development &amp; Design Manufacturing (ODM) partner for brands across the Philippines and beyond.</p>
+        <a href="about.html" class="btn btn-primary">Read Our Story</a>
+        <div class="legacy-milestones" style="margin-top:2.5rem;">
+          <div class="milestone">
+            <div class="milestone-year">1999</div>
+            <div class="milestone-text">
+              <h4>Founded</h4>
+              <p>A.M. Rieta begins its journey — "from a paddle to purpose."</p>
+            </div>
+          </div>
+          <div class="milestone">
+            <div class="milestone-year">2007+</div>
+            <div class="milestone-text">
+              <h4>ISO 22716 Certification</h4>
+              <p>Achieved international GMP certification for cosmetic manufacturing.</p>
+            </div>
+          </div>
+          <div class="milestone">
+            <div class="milestone-year">Today</div>
+            <div class="milestone-text">
+              <h4>State-of-the-Art Partner</h4>
+              <p>A full-service ODM with advanced laboratories and growing product lines.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="cert-badges">
+          <div class="cert-badge">
+            <div class="cert-badge-icon">🏅</div>
+            <div class="cert-badge-name">ISO 22716:2007</div>
+            <div class="cert-badge-desc">Good Manufacturing Practices — Cosmetics</div>
+          </div>
+          <div class="cert-badge">
+            <div class="cert-badge-icon">🇵🇭</div>
+            <div class="cert-badge-name">FDA GMP</div>
+            <div class="cert-badge-desc">Philippine FDA — Drug &amp; Cosmetic Production</div>
+          </div>
+        </div>
+        <div style="margin-top:2rem; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.1); border-radius:16px; padding:2rem;">
+          <span class="section-label" style="color:var(--accent-light);">Product Categories</span>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.75rem; margin-top:1rem;">
+            <div style="display:flex;align-items:center;gap:0.625rem;color:rgba(255,255,255,0.7);font-size:0.875rem;"><span>🛁</span> Personal Care</div>
+            <div style="display:flex;align-items:center;gap:0.625rem;color:rgba(255,255,255,0.7);font-size:0.875rem;"><span>✨</span> Skin Care</div>
+            <div style="display:flex;align-items:center;gap:0.625rem;color:rgba(255,255,255,0.7);font-size:0.875rem;"><span>💆</span> Hair Care</div>
+            <div style="display:flex;align-items:center;gap:0.625rem;color:rgba(255,255,255,0.7);font-size:0.875rem;"><span>🧴</span> Hydro-Alcoholics</div>
+            <div style="display:flex;align-items:center;gap:0.625rem;color:rgba(255,255,255,0.7);font-size:0.875rem;"><span>🍼</span> Baby Products</div>
+            <div style="display:flex;align-items:center;gap:0.625rem;color:rgba(255,255,255,0.7);font-size:0.875rem;"><span>🏠</span> Household</div>
+            <div style="display:flex;align-items:center;gap:0.625rem;color:rgba(255,255,255,0.7);font-size:0.875rem;grid-column:1/-1;"><span>💄</span> Other Cosmetics &amp; More</div>
+          </div>
+          <a href="products.html" class="btn btn-outline-light" style="margin-top:1.5rem;font-size:0.85rem;padding:0.625rem 1.25rem;">View All Product Lines →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== CTA STRIP ========== -->
+<section class="section" style="background:var(--off-white); padding:3.5rem 0;">
+  <div class="container">
+    <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:2rem;">
+      <div>
+        <h3 style="color:var(--primary); font-size:1.5rem; margin-bottom:0.5rem;">Ready to Build Your Brand?</h3>
+        <p style="margin:0;">Get in touch with our team and let's discuss how we can bring your vision to life.</p>
+      </div>
+      <div style="display:flex; gap:1rem; flex-wrap:wrap;">
+        <a href="contact.html" class="btn btn-primary btn-lg">Start a Conversation</a>
+        <a href="quality.html" class="btn btn-outline btn-lg">Our Quality Standards</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== FOOTER ========== -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="logo logo--footer">
+          <img src="images/amr-logo.png" alt="A.M. Rieta Corporation" class="logo-img" />
+        </a>
+        <p>Bringing your personal care brand to life—from concept to shelf. Trusted partner since 1999.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Navigation</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="services.html">Our Services</a></li>
+          <li><a href="products.html">Product Lines</a></li>
+          <li><a href="quality.html">Quality &amp; Facilities</a></li>
+          <li><a href="contact.html">Contact Us</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Products</h4>
+        <ul>
+          <li><a href="products.html">Personal Care</a></li>
+          <li><a href="products.html">Skin Care</a></li>
+          <li><a href="products.html">Hair Care</a></li>
+          <li><a href="products.html">Baby Products</a></li>
+          <li><a href="products.html">Household</a></li>
+        </ul>
+      </div>
+      <div class="footer-col footer-contact">
+        <h4>Contact</h4>
+        <p>(046) 230-2443</p>
+        <p>0920-920-2788</p>
+        <p><a href="mailto:amrietachemical@yahoo.com">amrietachemical@yahoo.com</a></p>
+        <p style="margin-top:0.75rem;"><a href="https://www.amrietacorporation.com" target="_blank" rel="noopener">www.amrietacorporation.com</a></p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 A.M. Rieta Corporation. All rights reserved.</p>
+      <div class="footer-certs">
+        <span class="footer-cert">ISO 22716:2007</span>
+        <span class="footer-cert">FDA GMP</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>

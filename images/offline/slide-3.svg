@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900">
+  <defs>
+    <linearGradient id="g" x1="0" x2="1">
+      <stop offset="0" stop-color="#447a1f"/>
+      <stop offset="1" stop-color="#6cbb2f"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="900" fill="url(#g)"/>
+  <g fill="none" stroke="#c8d400" stroke-width="11" opacity=".78">
+    <rect x="210" y="210" width="520" height="430" rx="22"/>
+    <path d="M760 350h560M760 430h560M760 510h560"/>
+    <circle cx="430" cy="425" r="120"/>
+  </g>
+  <text x="210" y="740" fill="#fff" font-family="Arial" font-size="62" font-weight="700">LAB INSTRUMENTS</text>
+</svg>

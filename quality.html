@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quality &amp; Facilities — A.M. Rieta Corporation</title>
+  <meta name="description" content="ISO 22716:2007 and FDA GMP-compliant manufacturing. Learn about A.M. Rieta's quality policy, state-of-the-art premises, and advanced laboratory facilities." />
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    .animate { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .animate.visible { opacity: 1; transform: translateY(0); }
+    .animate-delay-1 { transition-delay: 0.1s; }
+    .animate-delay-2 { transition-delay: 0.2s; }
+    .quality-stat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; margin-top: 3.5rem; }
+    .quality-stat { text-align: center; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: var(--radius-lg); padding: 2rem 1.5rem; }
+    .quality-stat-num { font-family: var(--font-serif); font-size: 2.5rem; font-weight: 700; color: var(--accent-light); line-height: 1; }
+    .quality-stat-label { color: rgba(255,255,255,0.6); font-size: 0.82rem; margin-top: 0.5rem; line-height: 1.4; }
+    @media(max-width:768px) { .quality-stat-grid { grid-template-columns: 1fr 1fr; } }
+    @media(max-width:480px) { .quality-stat-grid { grid-template-columns: 1fr 1fr; } }
+  </style>
+</head>
+<body>
+
+<!-- ========== HEADER ========== -->
+<header class="site-header">
+  <div class="header-inner">
+    <a href="index.html" class="logo">
+      <img src="images/amr-logo.png" alt="A.M. Rieta Corporation" class="logo-img" />
+    </a>
+    <nav class="main-nav" aria-label="Main navigation">
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="services.html">Our Services</a></li>
+        <li><a href="products.html">Product Lines</a></li>
+        <li><a href="quality.html">Quality &amp; Facilities</a></li>
+        <li><a href="contact.html">Contact Us</a></li>
+      </ul>
+    </nav>
+    <div class="header-cta">
+      <a href="contact.html" class="btn btn-primary">Partner With Us</a>
+      <button class="hamburger" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- ========== PAGE HERO ========== -->
+<section class="page-hero">
+  <div class="container">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="index.html">Home</a>
+      <span>/</span>
+      <span>Quality &amp; Facilities</span>
+    </nav>
+    <span class="section-label">Our Standards</span>
+    <h1>Quality You Can Trust. Facilities Built for Excellence.</h1>
+    <p>ISO 22716:2007 certified and FDA GMP-compliant — our quality systems and state-of-the-art facilities ensure every product we manufacture meets the highest international standards.</p>
+  </div>
+</section>
+
+<!-- ========== CERTIFICATIONS BANNER ========== -->
+<section class="legacy-section" style="padding:3.5rem 0;">
+  <div class="container">
+    <div style="position:relative; z-index:1;">
+      <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:2rem;">
+        <div>
+          <span class="section-label" style="color:var(--accent-light);">Our Certifications</span>
+          <h2 style="color:var(--white); font-size:1.75rem;">Internationally Recognized &amp; Locally Certified</h2>
+        </div>
+        <div style="display:flex; gap:1.5rem; flex-wrap:wrap;">
+          <div class="cert-badge">
+            <div class="cert-badge-icon">🏅</div>
+            <div class="cert-badge-name">ISO 22716:2007</div>
+            <div class="cert-badge-desc">Good Manufacturing Practices — Cosmetics</div>
+          </div>
+          <div class="cert-badge">
+            <div class="cert-badge-icon">🇵🇭</div>
+            <div class="cert-badge-name">FDA GMP</div>
+            <div class="cert-badge-desc">Philippine FDA — Drug &amp; Cosmetic Manufacturing</div>
+          </div>
+        </div>
+      </div>
+      <div class="quality-stat-grid">
+        <div class="quality-stat">
+          <div class="quality-stat-num">100%</div>
+          <div class="quality-stat-label">GMP Compliance Rate</div>
+        </div>
+        <div class="quality-stat">
+          <div class="quality-stat-num">2</div>
+          <div class="quality-stat-label">Major Certifications (ISO &amp; FDA)</div>
+        </div>
+        <div class="quality-stat">
+          <div class="quality-stat-num">3–5</div>
+          <div class="quality-stat-label">Day Microbial Testing Cycle</div>
+        </div>
+        <div class="quality-stat">
+          <div class="quality-stat-num">Annual</div>
+          <div class="quality-stat-label">Equipment Calibration Schedule</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== QUALITY POLICY & PREMISES ========== -->
+<section class="section">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-label">Quality System</span>
+      <h2>Our Quality Policy &amp; Premises</h2>
+      <div class="divider"></div>
+    </div>
+    <div class="quality-intro">
+      <div class="animate animate-delay-1">
+        <div class="policy-card">
+          <div class="policy-card-icon">📋</div>
+          <h3>Quality Policy</h3>
+          <p>To manufacture and deliver products of <strong>high and consistent quality</strong> at the most reasonable price, meeting the expectations of our customers and regulatory authorities.</p>
+          <div class="control-list">
+            <div class="control-item">
+              <div class="control-check"></div>
+              <p>Quality control implemented from receipt of raw materials to release of finished products</p>
+            </div>
+            <div class="control-item">
+              <div class="control-check"></div>
+              <p>Effective quality management system embracing full GMP requirements</p>
+            </div>
+            <div class="control-item">
+              <div class="control-check"></div>
+              <p>All testing conducted with annually calibrated instruments and equipment</p>
+            </div>
+            <div class="control-item">
+              <div class="control-check"></div>
+              <p>Strict documentation and traceability across every production batch</p>
+            </div>
+            <div class="control-item">
+              <div class="control-check"></div>
+              <p>Continuous review and improvement of quality procedures and systems</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="animate animate-delay-2">
+        <div class="premises-card">
+          <div style="font-size:2rem; margin-bottom:1.25rem;">🏭</div>
+          <h3>State-of-the-Art Premises</h3>
+          <p>Our manufacturing plant features logical personnel, material, and equipment flow — specifically designed to avoid cross-contamination and product mix-ups at every stage of production.</p>
+          <div class="premises-features">
+            <div class="premises-feature">
+              <div class="premises-feature-icon">🚶</div>
+              <p>Controlled personnel flow pathways to prevent contamination</p>
+            </div>
+            <div class="premises-feature">
+              <div class="premises-feature-icon">📦</div>
+              <p>Dedicated material receiving, quarantine, and release zones</p>
+            </div>
+            <div class="premises-feature">
+              <div class="premises-feature-icon">⚙️</div>
+              <p>Equipment layout optimized for GMP-compliant manufacturing</p>
+            </div>
+            <div class="premises-feature">
+              <div class="premises-feature-icon">🛡️</div>
+              <p>Environmental controls to maintain product integrity and safety</p>
+            </div>
+            <div class="premises-feature">
+              <div class="premises-feature-icon">🧹</div>
+              <p>Regular sanitation and hygiene audits across all production areas</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== LABS ========== -->
+<section class="section section--gray">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-label">Laboratory Facilities</span>
+      <h2>Advanced Laboratory Facilities</h2>
+      <p>Our laboratory infrastructure is purpose-built to support rigorous testing protocols, ensuring every product released meets our strict quality benchmarks.</p>
+      <div class="divider"></div>
+    </div>
+    <div class="labs-grid">
+      <div class="lab-card animate animate-delay-1">
+        <div class="lab-card-header">
+          <div class="lab-icon lab-icon--micro">🔬</div>
+          <div>
+            <span class="step-tag">Microbiology</span>
+            <h3>Micro Lab Facility</h3>
+          </div>
+        </div>
+        <p>An isolated room crucial for infection prevention and control. This dedicated facility is used for comprehensive microbial analysis to ensure every product is safe from biological contamination before release.</p>
+        <p style="margin-top:0.75rem;">Products undergo a thorough <strong>3–5 day testing cycle</strong> prior to release, covering all required microbiological parameters.</p>
+        <div class="lab-features">
+          <div class="lab-feature">Microbial Analysis (BAM methodology)</div>
+          <div class="lab-feature">Environmental Swab Testing</div>
+          <div class="lab-feature">Gram Staining procedures</div>
+          <div class="lab-feature">Annually calibrated Incubators</div>
+          <div class="lab-feature">Annually calibrated Autoclaves</div>
+          <div class="lab-feature">Biosafety Cabinets (BSC)</div>
+        </div>
+      </div>
+      <div class="lab-card animate animate-delay-2">
+        <div class="lab-card-header">
+          <div class="lab-icon lab-icon--phys">⚗️</div>
+          <div>
+            <span class="step-tag">Physicochemical</span>
+            <h3>Physicochemical &amp; Organoleptic Laboratory</h3>
+          </div>
+        </div>
+        <p>A well-ventilated, safe workspace where trained analysts perform comprehensive testing across a full range of physical, chemical, and sensory product attributes.</p>
+        <p style="margin-top:0.75rem;">All instruments are <strong>calibrated annually</strong> to guarantee accurate and reproducible testing results across every production batch.</p>
+        <div class="lab-features">
+          <div class="lab-feature">Appearance &amp; Color Analysis (Organoleptic)</div>
+          <div class="lab-feature">pH Testing &amp; Measurement</div>
+          <div class="lab-feature">Viscosity Determination</div>
+          <div class="lab-feature">Electrical Conductivity Testing</div>
+          <div class="lab-feature">Stability &amp; Compatibility Testing</div>
+          <div class="lab-feature">Annually calibrated instruments throughout</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="equipment-slider-block animate">
+      <div class="section-header section-header--left" style="margin-top:3rem; margin-bottom:2rem;">
+        <span class="section-label">Machines &amp; Equipment</span>
+        <h2>Inside Our Production Floor</h2>
+        <p>Our facilities are equipped with modern machines and calibrated systems that support safe, efficient, and consistent manufacturing output.</p>
+        <div class="divider divider--left"></div>
+      </div>
+
+      <div class="equipment-slider-stage" id="equipmentSlider">
+        <div class="equipment-slide" style="background-image:url('images/Equips%20and%20Premises/IMG_3413.JPG');">
+          <div class="equipment-slide-content">
+            <div class="equipment-slide-title">Stainless Mixing Vessels</div>
+            <div class="equipment-slide-desc">Controlled mixing systems for precise and repeatable formulation batches.</div>
+          </div>
+        </div>
+        <div class="equipment-slide" style="background-image:url('images/Equips%20and%20Premises/IMG_6738.jpg');">
+          <div class="equipment-slide-content">
+            <div class="equipment-slide-title">Automated Filling Line</div>
+            <div class="equipment-slide-desc">High-accuracy filling and sealing equipment for consistent production throughput.</div>
+          </div>
+        </div>
+        <div class="equipment-slide" style="background-image:url('images/Equips%20and%20Premises/IMG_6783.jpg');">
+          <div class="equipment-slide-content">
+            <div class="equipment-slide-title">Labeling &amp; Packing Area</div>
+            <div class="equipment-slide-desc">Organized post-production lines for accurate labeling and secure packaging.</div>
+          </div>
+        </div>
+        <div class="equipment-slide" style="background-image:url('images/Equips%20and%20Premises/IMG_6810.jpg');">
+          <div class="equipment-slide-content">
+            <div class="equipment-slide-title">Quality Inspection Station</div>
+            <div class="equipment-slide-desc">Final checks and verification processes before product release and distribution.</div>
+          </div>
+        </div>
+
+        <div class="equipment-slider-controls" aria-label="Equipment slider controls">
+          <button type="button" class="equipment-slider-btn" data-eq-dir="prev" aria-label="Previous equipment slide">&#10094;</button>
+          <button type="button" class="equipment-slider-btn" data-eq-dir="next" aria-label="Next equipment slide">&#10095;</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== GMP PRINCIPLES ========== -->
+<section class="section">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-label">GMP Framework</span>
+      <h2>Our GMP Principles in Practice</h2>
+      <p>ISO 22716 Good Manufacturing Practices shape every aspect of our operations.</p>
+      <div class="divider"></div>
+    </div>
+    <div class="features-grid">
+      <div class="feature-card animate">
+        <div class="feature-icon">👤</div>
+        <h3>Personnel</h3>
+        <p>Qualified, trained staff with defined responsibilities. Regular hygiene and GMP training programs for all production personnel.</p>
+      </div>
+      <div class="feature-card animate">
+        <div class="feature-icon">🏗️</div>
+        <h3>Premises &amp; Equipment</h3>
+        <p>Purpose-designed manufacturing spaces with calibrated, maintained equipment to prevent contamination and ensure consistent output.</p>
+      </div>
+      <div class="feature-card animate">
+        <div class="feature-icon">🌿</div>
+        <h3>Raw Materials</h3>
+        <p>Ethically sourced, tested, and approved raw materials. Strict supplier qualification and incoming material inspection protocols.</p>
+      </div>
+      <div class="feature-card animate">
+        <div class="feature-icon">📄</div>
+        <h3>Documentation</h3>
+        <p>Comprehensive batch records, SOPs, and traceability documentation maintained for every product and every production run.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== CTA ========== -->
+<section class="legacy-section">
+  <div class="container">
+    <div style="text-align:center; position:relative; z-index:1; max-width:650px; margin:0 auto;">
+      <span class="section-label" style="color:var(--accent-light);">Partner With Confidence</span>
+      <h2 style="color:var(--white); margin-bottom:1.25rem;">Quality is Our Promise to You</h2>
+      <p style="color:rgba(255,255,255,0.7); margin-bottom:2rem;">When you partner with A.M. Rieta, you gain access to a manufacturing environment where quality is never compromised. Let's create products your customers can trust.</p>
+      <div style="display:flex; gap:1rem; justify-content:center; flex-wrap:wrap;">
+        <a href="contact.html" class="btn btn-primary btn-lg">Get in Touch</a>
+        <a href="services.html" class="btn btn-outline-light btn-lg">Our Services</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== FOOTER ========== -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="logo logo--footer">
+          <img src="images/amr-logo.png" alt="A.M. Rieta Corporation" class="logo-img" />
+        </a>
+        <p>Bringing your personal care brand to life—from concept to shelf. Trusted partner since 1999.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Navigation</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="services.html">Our Services</a></li>
+          <li><a href="products.html">Product Lines</a></li>
+          <li><a href="quality.html">Quality &amp; Facilities</a></li>
+          <li><a href="contact.html">Contact Us</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Products</h4>
+        <ul>
+          <li><a href="products.html">Personal Care</a></li>
+          <li><a href="products.html">Skin Care</a></li>
+          <li><a href="products.html">Hair Care</a></li>
+          <li><a href="products.html">Baby Products</a></li>
+          <li><a href="products.html">Household</a></li>
+        </ul>
+      </div>
+      <div class="footer-col footer-contact">
+        <h4>Contact</h4>
+        <p>(046) 230-2443</p>
+        <p>0920-920-2788</p>
+        <p><a href="mailto:amrietachemical@yahoo.com">amrietachemical@yahoo.com</a></p>
+        <p style="margin-top:0.75rem;"><a href="https://www.amrietacorporation.com" target="_blank" rel="noopener">www.amrietacorporation.com</a></p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 A.M. Rieta Corporation. All rights reserved.</p>
+      <div class="footer-certs">
+        <span class="footer-cert">ISO 22716:2007</span>
+        <span class="footer-cert">FDA GMP</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>

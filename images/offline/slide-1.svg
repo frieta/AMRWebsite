@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900">
+  <defs>
+    <linearGradient id="g" x1="0" x2="1">
+      <stop offset="0" stop-color="#2f7f13"/>
+      <stop offset="1" stop-color="#5aaa1e"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="900" fill="url(#g)"/>
+  <g fill="none" stroke="#c8d400" stroke-width="10" opacity=".65">
+    <rect x="220" y="210" width="420" height="360" rx="24"/>
+    <circle cx="430" cy="390" r="95"/>
+    <path d="M640 390h240"/>
+    <path d="M880 340h180v100H880z"/>
+  </g>
+  <text x="220" y="700" fill="#fff" font-family="Arial" font-size="62" font-weight="700">MIXING VESSELS</text>
+</svg>

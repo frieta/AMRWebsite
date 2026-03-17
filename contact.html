@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact Us — A.M. Rieta Corporation</title>
+  <meta name="description" content="Get in touch with A.M. Rieta Corporation. Reach us by phone, email, or fill out our contact form to start your partnership today." />
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    .animate { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .animate.visible { opacity: 1; transform: translateY(0); }
+    .animate-delay-1 { transition-delay: 0.1s; }
+    .animate-delay-2 { transition-delay: 0.2s; }
+  </style>
+</head>
+<body>
+
+<!-- ========== HEADER ========== -->
+<header class="site-header">
+  <div class="header-inner">
+    <a href="index.html" class="logo">
+      <img src="images/amr-logo.png" alt="A.M. Rieta Corporation" class="logo-img" />
+    </a>
+    <nav class="main-nav" aria-label="Main navigation">
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="services.html">Our Services</a></li>
+        <li><a href="products.html">Product Lines</a></li>
+        <li><a href="quality.html">Quality &amp; Facilities</a></li>
+        <li><a href="contact.html">Contact Us</a></li>
+      </ul>
+    </nav>
+    <div class="header-cta">
+      <a href="contact.html" class="btn btn-primary">Partner With Us</a>
+      <button class="hamburger" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- ========== PAGE HERO ========== -->
+<section class="page-hero">
+  <div class="container">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="index.html">Home</a>
+      <span>/</span>
+      <span>Contact Us</span>
+    </nav>
+    <span class="section-label">Get in Touch</span>
+    <h1>Let's Build Your Brand Together</h1>
+    <p>Whether you have a product concept, a question about our services, or are ready to begin your ODM journey — our team is here to help.</p>
+  </div>
+</section>
+
+<!-- ========== CONTACT MAIN ========== -->
+<section class="section">
+  <div class="container">
+    <div class="contact-layout">
+
+      <!-- Contact Info -->
+      <div class="contact-info animate animate-delay-1">
+
+        <div>
+          <span class="section-label">Contact Information</span>
+          <h2 style="color:var(--primary); font-size:1.75rem; margin-bottom:0.75rem;">We'd Love to Hear From You</h2>
+          <p style="margin-bottom:2rem;">Reach out through any of the channels below, or complete the form and our team will be in touch promptly.</p>
+        </div>
+
+        <div class="contact-card">
+          <div class="contact-card-icon">📞</div>
+          <div>
+            <h4>Phone</h4>
+            <p>(046) 230-2443</p>
+            <p>0920-920-2788</p>
+          </div>
+        </div>
+
+        <div class="contact-card">
+          <div class="contact-card-icon">✉️</div>
+          <div>
+            <h4>Email</h4>
+            <a href="mailto:amrietachemical@yahoo.com">amrietachemical@yahoo.com</a>
+          </div>
+        </div>
+
+        <div class="contact-card">
+          <div class="contact-card-icon">🌐</div>
+          <div>
+            <h4>Website</h4>
+            <a href="https://www.amrietacorporation.com" target="_blank" rel="noopener">www.amrietacorporation.com</a>
+          </div>
+        </div>
+
+        <div class="contact-card">
+          <div class="contact-card-icon">🇵🇭</div>
+          <div>
+            <h4>Company</h4>
+            <p>A.M. Rieta Corporation</p>
+            <p style="font-size:0.85rem; color:var(--mid-gray); margin-top:0.15rem;">Established 1999 · Philippines</p>
+          </div>
+        </div>
+
+        <!-- Certifications -->
+        <div class="cert-display">
+          <h4>Our Certifications</h4>
+          <div class="cert-items">
+            <div class="cert-item">
+              <div class="cert-item-icon">🏅</div>
+              <div class="cert-item-name">ISO 22716:2007</div>
+              <div class="cert-item-desc">GMP Cosmetics</div>
+            </div>
+            <div class="cert-item">
+              <div class="cert-item-icon">📜</div>
+              <div class="cert-item-name">FDA GMP</div>
+              <div class="cert-item-desc">Philippine FDA Certified</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Contact Form -->
+      <div class="contact-form-wrap animate animate-delay-2">
+        <h3>Send Us a Message</h3>
+        <p>Tell us about your project and we'll get back to you within 1–2 business days.</p>
+        <form id="contactForm" novalidate>
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="name">Full Name <span style="color:var(--red);">*</span></label>
+              <input type="text" id="name" name="name" placeholder="e.g. Maria Santos" required />
+            </div>
+            <div class="form-group">
+              <label for="company">Company / Brand Name</label>
+              <input type="text" id="company" name="company" placeholder="e.g. XYZ Brands Inc." />
+            </div>
+            <div class="form-group">
+              <label for="email">Email Address <span style="color:var(--red);">*</span></label>
+              <input type="email" id="email" name="email" placeholder="you@company.com" required />
+            </div>
+            <div class="form-group">
+              <label for="phone">Phone Number</label>
+              <input type="tel" id="phone" name="phone" placeholder="+63 9XX XXX XXXX" />
+            </div>
+            <div class="form-group full-width">
+              <label for="service">Service of Interest</label>
+              <select id="service" name="service">
+                <option value="" disabled selected>— Select a service —</option>
+                <option value="custom-formulation">Custom Formulation</option>
+                <option value="private-label">Private Label Manufacturing</option>
+                <option value="personal-care">Personal Care Products</option>
+                <option value="skin-care">Skin Care Products</option>
+                <option value="hair-care">Hair Care &amp; Styling</option>
+                <option value="hydro-alcoholics">Hydro-Alcoholic Products</option>
+                <option value="baby-products">Baby Products</option>
+                <option value="household">Household Products</option>
+                <option value="other-cosmetics">Other Cosmetics &amp; Specialty</option>
+                <option value="regulatory-support">Regulatory &amp; Compliance Support</option>
+                <option value="general-inquiry">General Inquiry</option>
+              </select>
+            </div>
+            <div class="form-group full-width">
+              <label for="message">Message <span style="color:var(--red);">*</span></label>
+              <textarea id="message" name="message" placeholder="Tell us about your project, product concept, or any questions you may have..." required></textarea>
+            </div>
+          </div>
+          <div class="form-submit">
+            <button type="submit" class="btn btn-primary btn-lg" style="width:100%; justify-content:center;">Send Message</button>
+            <span class="form-note">We typically respond within 1–2 business days.</span>
+          </div>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ========== WHY PARTNER ========== -->
+<section class="section section--gray">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-label">Why Partner With Us</span>
+      <h2>What You Can Expect</h2>
+      <p>When you reach out to A.M. Rieta, you're beginning a partnership built on transparency, expertise, and commitment to your brand's success.</p>
+      <div class="divider"></div>
+    </div>
+    <div class="features-grid">
+      <div class="feature-card animate">
+        <div class="feature-icon">⚡</div>
+        <h3>Prompt Response</h3>
+        <p>Our team is committed to responding to all inquiries within 1–2 business days to ensure your project moves forward without delay.</p>
+      </div>
+      <div class="feature-card animate">
+        <div class="feature-icon">🤝</div>
+        <h3>Personalized Approach</h3>
+        <p>Every brand has unique needs. We take time to understand your specific requirements before proposing any solutions or timelines.</p>
+      </div>
+      <div class="feature-card animate">
+        <div class="feature-icon">🔒</div>
+        <h3>Confidentiality</h3>
+        <p>Your product concepts, formulations, and business information are treated with strict confidentiality at all stages of our engagement.</p>
+      </div>
+      <div class="feature-card animate">
+        <div class="feature-icon">📈</div>
+        <h3>Scalable Solutions</h3>
+        <p>From pilot batch to full commercial production, our capabilities grow with your brand — we're the partner you'll never need to outgrow.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== FOOTER ========== -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="logo logo--footer">
+          <img src="images/amr-logo.png" alt="A.M. Rieta Corporation" class="logo-img" />
+        </a>
+        <p>Bringing your personal care brand to life—from concept to shelf. Trusted partner since 1999.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Navigation</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="services.html">Our Services</a></li>
+          <li><a href="products.html">Product Lines</a></li>
+          <li><a href="quality.html">Quality &amp; Facilities</a></li>
+          <li><a href="contact.html">Contact Us</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Products</h4>
+        <ul>
+          <li><a href="products.html">Personal Care</a></li>
+          <li><a href="products.html">Skin Care</a></li>
+          <li><a href="products.html">Hair Care</a></li>
+          <li><a href="products.html">Baby Products</a></li>
+          <li><a href="products.html">Household</a></li>
+        </ul>
+      </div>
+      <div class="footer-col footer-contact">
+        <h4>Contact</h4>
+        <p>(046) 230-2443</p>
+        <p>0920-920-2788</p>
+        <p><a href="mailto:amrietachemical@yahoo.com">amrietachemical@yahoo.com</a></p>
+        <p style="margin-top:0.75rem;"><a href="https://www.amrietacorporation.com" target="_blank" rel="noopener">www.amrietacorporation.com</a></p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 A.M. Rieta Corporation. All rights reserved.</p>
+      <div class="footer-certs">
+        <span class="footer-cert">ISO 22716:2007</span>
+        <span class="footer-cert">FDA GMP</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>

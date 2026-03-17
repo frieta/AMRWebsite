@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900">
+  <defs>
+    <linearGradient id="g" x1="0" x2="1">
+      <stop offset="0" stop-color="#2d7015"/>
+      <stop offset="1" stop-color="#4ea319"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="900" fill="url(#g)"/>
+  <g fill="none" stroke="#f44336" stroke-width="11" opacity=".8">
+    <rect x="220" y="220" width="1150" height="430" rx="24"/>
+    <path d="M320 650v-430M510 650v-430M700 650v-430M890 650v-430M1080 650v-430"/>
+  </g>
+  <text x="220" y="760" fill="#fff" font-family="Arial" font-size="62" font-weight="700">PACKAGING AREA</text>
+</svg>
