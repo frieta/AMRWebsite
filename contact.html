@@ -125,7 +125,8 @@
       <div class="contact-form-wrap animate animate-delay-2">
         <h3>Send Us a Message</h3>
         <p>Tell us about your project and we'll get back to you within 1–2 business days.</p>
-        <form id="contactForm" novalidate>
+        <form id="contactForm" action="https://api.web3forms.com/submit" method="POST">
+          <input type="hidden" name="access_key" value="a8f75ada-d733-4e55-b7ce-bb9b9b90475a" />
           <div class="form-grid">
             <div class="form-group">
               <label for="name">Full Name <span style="color:var(--red);">*</span></label>
@@ -170,6 +171,16 @@
             <span class="form-note">We typically respond within 1–2 business days.</span>
           </div>
         </form>
+        <div id="form-success" style="display:none;color:green;">
+        Thank you! Your message has been sent.
+        </div>
+        <script>
+        document.getElementById('contactForm').addEventListener('submit', function() {
+          setTimeout(function() {
+            document.getElementById('form-success').style.display = 'block';
+          }, 1000);
+        });
+        </script>
       </div>
 
     </div>

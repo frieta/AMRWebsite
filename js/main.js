@@ -63,7 +63,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const contactForm = document.getElementById('contactForm');
   if (contactForm) {
     contactForm.addEventListener('submit', (e) => {
-      e.preventDefault();
+      //e.preventDefault();
       const btn = contactForm.querySelector('.form-submit .btn');
       const note = contactForm.querySelector('.form-note');
       btn.textContent = 'Sending...';
