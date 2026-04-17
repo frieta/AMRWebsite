@@ -15,9 +15,133 @@
     .animate-delay-3 { transition-delay: 0.3s; }
     .animate-delay-4 { transition-delay: 0.4s; }
     .hero .animate { opacity: 1; transform: none; }
+
+    /* Cookie Banner Styles */
+    .npc-cookie-banner {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background-color: #ffffff;
+      color: #333333;
+      display: none;
+      z-index: 99999;
+      font-family: Arial, sans-serif;
+      box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.1);
+      border-top: 4px solid #0056b3;
+    }
+
+    .npc-cookie-banner.show {
+      display: block;
+    }
+
+    .npc-banner-layout {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+      box-sizing: border-box;
+      gap: 15px;
+      text-align: center;
+    }
+
+    .npc-img-wrapper img {
+      display: block;
+      width: 60px;
+      height: auto;
+    }
+
+    .npc-text-wrapper h4 {
+      margin: 0 0 10px 0;
+      font-size: 18px;
+      color: #0056b3;
+    }
+
+    .npc-text-wrapper p {
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.4;
+      max-width: 800px;
+    }
+
+    .npc-text-wrapper a {
+      color: #0056b3;
+      text-decoration: underline;
+      font-weight: bold;
+    }
+
+    .npc-buttons-wrapper {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: center;
+      width: 100%;
+    }
+
+    .npc-btn {
+      padding: 10px 25px;
+      font-size: 14px;
+      cursor: pointer;
+      border-radius: 4px;
+      font-weight: bold;
+      border: none;
+      transition: opacity 0.3s;
+      flex-grow: 1;
+      max-width: 200px;
+    }
+
+    .npc-btn:hover { opacity: 0.85; }
+
+    .npc-btn-primary { background-color: #0056b3; color: white; }
+    .npc-btn-secondary { background-color: #e0e0e0; color: #333333; }
+
+    @media (min-width: 768px) {
+      .npc-banner-layout {
+        flex-direction: row;
+        align-items: center;
+        text-align: left;
+        padding: 15px 30px;
+      }
+
+      .npc-img-wrapper {
+        margin-right: 20px;
+        flex-shrink: 0;
+      }
+
+      .npc-text-wrapper {
+        flex-grow: 1;
+        margin-right: 30px;
+      }
+
+      .npc-buttons-wrapper {
+        width: auto;
+        flex-shrink: 0;
+      }
+
+      .npc-btn { flex-grow: 0; }
+    }
   </style>
 </head>
 <body>
+
+<!-- ========== COOKIE BANNER ========== -->
+<div id="npc-cookie-banner" class="npc-cookie-banner">
+  <div class="npc-banner-layout">
+    <div class="npc-img-wrapper">
+      <img src="dataprivacy.png" alt="Privacy Icon" width="60" height="60">
+    </div>
+    <div class="npc-text-wrapper">
+      <h4>We value your data privacy</h4>
+      <p>
+        In compliance with the Philippine Data Privacy Act of 2012 (DPA), we use essential cookies to make our site work. With your consent, we may also use non-essential cookies to analyze site traffic. You can freely give or deny your consent. Read our <a href="/privacy-policy" target="_blank">Privacy Policy</a>.
+      </p>
+    </div>
+    <div class="npc-buttons-wrapper">
+      <button id="npc-accept-all" class="npc-btn npc-btn-primary">Accept All</button>
+      <button id="npc-decline-all" class="npc-btn npc-btn-secondary">Decline</button>
+    </div>
+  </div>
+</div>
 
 <!-- ========== HEADER ========== -->
 <header class="site-header">
@@ -292,5 +416,32 @@
 </footer>
 
 <script src="js/main.js"></script>
+
+<!-- Cookie Banner Script -->
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const cookieBanner = document.getElementById("npc-cookie-banner");
+    const acceptBtn = document.getElementById("npc-accept-all");
+    const declineBtn = document.getElementById("npc-decline-all");
+
+    const consentStatus = localStorage.getItem("npcCookieConsent");
+
+    if (!consentStatus) {
+      setTimeout(() => {
+        cookieBanner.classList.add("show");
+      }, 500);
+    }
+
+    acceptBtn.addEventListener("click", function() {
+      localStorage.setItem("npcCookieConsent", "accepted");
+      cookieBanner.classList.remove("show");
+    });
+
+    declineBtn.addEventListener("click", function() {
+      localStorage.setItem("npcCookieConsent", "declined");
+      cookieBanner.classList.remove("show");
+    });
+  });
+</script>
 </body>
 </html>
