@@ -1,0 +1,140 @@
+# DMS Sales - Document Management System
+
+PHP + MySQL document management application for the Sales department, with support for uploads, revisions, archiving, notifications, and role-based access.
+
+## Core Features
+
+- Role-based authentication (`admin`, `authorized`, `temp`)
+- Document upload with client and document type metadata
+- Revision history with per-version view/download
+- Archive and unarchive workflow (active/archived file storage)
+- License expiration tracking and daily admin summaries
+- Admin notifications feed and notification open/read handling
+- Temporary-account document permissions (restricted file access)
+
+## Main Pages
+
+- `public/login.php` - sign in page
+- `public/dashboard.php` - summary cards and recent documents
+- `public/drive.php` - document drive with search, filters, folders, and actions
+- `public/revisions.php` - revised file history and version list
+- `public/licenses.php` - expiration monitoring and Excel export
+- `public/admin_notifications.php` - notifications inbox with filters
+- `public/users.php` - admin user management
+- `public/document_types.php` - document type management
+- `public/add_client.php` - client name management
+- `public/archive.php` - archived documents
+- `public/view.php` / `public/download.php` - document viewing and download
+- `public/view_revision.php` / `public/download_revision.php` - revision viewing and download
+
+## Tech Stack
+
+- PHP (server-rendered pages under `public/`)
+- MySQL / MariaDB (`database/schema.sql`)
+- XAMPP-compatible deployment
+
+## Project Structure
+
+- `public/` - browser-accessible pages
+- `actions/` - form/action handlers
+- `includes/` - shared auth, helpers, and layout
+- `config/database.php` - database connection config
+- `database/schema.sql` - schema + default seed data
+- `storage/active/` - active uploaded files
+- `storage/archived/` - archived files
+- `storage/revisions/` - previous file revisions
+
+## Local Setup (XAMPP)
+
+1. Place the project at:
+   - `c:/xampp/htdocs/DMS-Sales`
+2. Start Apache and MySQL from XAMPP Control Panel.
+3. Create/import database schema:
+   - Open phpMyAdmin
+   - Import `database/schema.sql`
+4. Update credentials in:
+   - `config/database.php`
+5. Open the app:
+   - `http://localhost/DMS-Sales/public/`
+
+## Database
+
+- Default database name from schema: `document_management_system`
+- Main tables include:
+  - `users`
+  - `documents`
+  - `document_revisions`
+  - `document_types`
+  - `client_names`
+  - `admin_notifications`
+  - `temp_account_permissions`
+
+## Default Login
+
+- Username: `admin`
+- Password: `password`
+
+Change default credentials immediately after first login.
+
+## Common Workflows
+
+### Upload a New Document
+
+1. Open `Document Drive`.
+2. Click `Add New File`.
+3. Fill out client, title, type, and optional expiration date.
+4. Upload and save.
+
+### Revise an Existing Document
+
+1. Open `Document Drive` and click `Add New File`.
+2. Use the same title and document type as the existing file.
+3. Check the revise option in the upload form.
+4. Submit to save a new version while preserving the old one in `storage/revisions/`.
+
+### Archive / Unarchive
+
+- Archive from drive views to move file to `storage/archived/`.
+- Unarchive from archive view to restore file to active storage.
+
+### Check Expiring Documents
+
+1. Open `License Expiration Monitoring`.
+2. Filter by client if needed.
+3. Sort by expiration date or client name.
+4. Export to Excel when a report is needed.
+
+### Review Notifications
+
+1. Open `Notifications` from the top navigation.
+2. Choose a filter: `All Notifications`, `Daily Expiration Summary`, `Document Revised`, or `New Access Request`.
+3. Click `Open` to mark a notification as read and follow its target page.
+
+## Roles and Access
+
+- `admin`: full access, user management, notifications
+- `authorized`: document operations and permitted management actions
+- `temp`: limited access to explicitly assigned documents
+
+## Storage and File Behavior
+
+- Active uploads are stored under `storage/active/`.
+- Archived files are moved to `storage/archived/`.
+- Previous versions are copied to `storage/revisions/` when a document is revised.
+- File history is tracked in `document_revisions` and surfaced in `Revised Files`.
+
+## Notes
+
+- Ensure `storage/active`, `storage/archived`, and `storage/revisions` are writable by Apache/PHP.
+- App routes and assets are configured for base path `/DMS-Sales/public`.
+- If you rename the project folder, update hardcoded paths accordingly.
+- Login redirects to `public/dashboard.php` after successful authentication.
+- The default landing page at `public/index.php` redirects to login or dashboard depending on session state.
+
+## Troubleshooting
+
+- Cannot log in: verify DB credentials in `config/database.php` and that schema import succeeded.
+- Upload/revision errors: check storage folder write permissions.
+- Missing notifications: confirm account role is allowed and record exists in `admin_notifications`.
+- Wrong links after moving folder: update base path references that use `/DMS-Sales/public`.
+

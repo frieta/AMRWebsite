@@ -1,0 +1,187 @@
+# EARS (Employee Attendance Record System)
+
+A PHP + MySQL attendance system for employee time in/time out with visitor logging, admin management, and a guard workflow.
+
+## Features
+
+- Public time station for employee and visitor time logs
+- Auto decision for time in/time out based on current-day log status
+- Visitor support with ID format `V9999`
+- Optional **full visitor data collection** during time in
+- Admin dashboard with visitor metrics and recent logs
+- Employee management (CRUD)
+- Admin user management (CRUD)
+- Guard account management (create, activate/deactivate)
+- Attendance filtering and CSV export (employees and visitors)
+- Guard panel to complete missing visitor information
+- Theme toggle support (light/dark)
+
+## Tech Stack
+
+- PHP (procedural)
+- MySQL / MariaDB
+- jQuery
+- Bootstrap
+- DataTables
+
+## Project Structure
+
+- `index.php` - Public time in/time out kiosk page
+- `admin/` - Admin login, dashboard, reports, and management pages
+- `guard/` - Guard login and visitor information completion page
+- `assets/` - CSS, JS, fonts, images
+- `database/attendance.sql` - Base schema and seed data
+- `database/schema_update_checker.sql` - Idempotent schema migrator/checker
+
+## Requirements
+
+- XAMPP (Apache + MySQL)
+- PHP 7.4+ (PHP 8.x works in most cases, but this codebase was originally written for older PHP style)
+- MySQL/MariaDB with a database named `attendance`
+
+## Local Setup (XAMPP)
+
+1. Copy this project to:
+   - `C:\xampp\htdocs\EARS`
+2. Start **Apache** and **MySQL** in XAMPP Control Panel.
+3. Create a database named `attendance`.
+4. Import schema:
+   - Primary: `database/attendance.sql`
+   - Optional upgrade/repair: run `database/schema_update_checker.sql`
+5. Open the app in browser:
+   - Public kiosk: `http://localhost/EARS/`
+   - Admin login: `http://localhost/EARS/admin/`
+   - Guard login: `http://localhost/EARS/guard/`
+
+## Database Connection
+
+Configured in `admin/db_connect.php`:
+
+- First attempt: host `localhost`, user `root`, password `root`, database `attendance`
+- Fallback attempt: host `localhost`, user `root`, password ``, database `attendance`
+
+If your MySQL credentials are different, update `admin/db_connect.php`.
+
+## Default Accounts (from seed/schema)
+
+- Admin:
+  - Username: `admin`
+  - Password: `admin123`
+- Guard:
+  - Username: `guard`
+  - Password: `guard123`
+
+> Change default credentials immediately in production.
+
+## Main Workflows
+
+### 1) Public Kiosk (`/index.php`)
+
+- Enter employee number or visitor ID.
+- Visitor IDs must match `V` + 4 digits (example: `V0001`).
+- Press Enter or use Time In/Time Out buttons.
+- For visitors, if full data mode is enabled, a modal requires:
+  - Name, Company, Contact No., Purpose, Contact Person, Visitor Type
+- Live cards and tables show:
+  - Employees inside
+  - Visitors inside
+  - Total visitors today
+  - Last 10 employee logs
+  - Visitors currently inside
+
+### 2) Admin Panel (`/admin`)
+
+- `home.php`: Dashboard + settings:
+  - `require_full_visitor_data` (force full visitor details at Time In)
+  - `time_out_cooldown_minutes` (allowed range: 1 to 120, default: 3)
+- `employee.php`: Employee CRUD
+- `attendance.php`: Employee attendance table with filters + CSV export
+- `visitor_attendance.php`: Visitor attendance table with date filters + CSV export
+- `users.php`: Admin user CRUD
+- `guards.php`: Guard account CRUD + activate/deactivate
+
+### 3) Guard Panel (`/guard`)
+
+- Login using guard account
+- `home.php` lists visitor logs with incomplete details
+- Guard completes required visitor fields and saves
+
+## Important Endpoints (AJAX/Backend)
+
+- `admin/time_log.php` - Main logger for employee/visitor records (`POST`)
+  - Required: `eno`, `type` (`1`=Time In, `4`=Time Out)
+  - Visitor optional/required fields (based on setting): `visitor_name`, `company`, `contact_no`, `purpose`, `contact_person`, `visitor_type`
+- `admin/check_log_status.php` - Determines if current ID is “inside”
+- `admin/count_am_in_minus_pm_ou.php` - Employee inside count
+- `admin/count_visitors_inside.php` - Visitor inside + today count
+- `admin/get_recent_logs.php` - Last 10 employee logs
+- `admin/get_visitors_inside_monitoring.php` - Visitor inside monitor list
+- `admin/get_visitor_data_collection_setting.php` - Reads visitor data mode
+- `guard/save_visitor_info.php` - Completes visitor details for a selected visitor log (`POST`)
+
+## Data Model Overview
+
+Core tables:
+
+- `employee`
+- `attendance` (employee log_type 1/2/3/4)
+- `visitor_attendance` (visitor log_type 1/4)
+- `users` (admin accounts)
+- `guards` (guard accounts with `is_active`)
+- `app_settings` (`require_full_visitor_data`, `time_out_cooldown_minutes`)
+
+## Operational Notes
+
+- Several pages auto-create/auto-update tables/columns if missing.
+- Timezone is set in multiple files to `Asia/Manila`.
+- Visitor Time Out requires prior Time In (same day).
+- Visitor Time Out cooldown is configurable via `app_settings.time_out_cooldown_minutes` (default `3`, min `1`, max `120`).
+- After a visitor Time Out, Time In is blocked for 3 minutes to reduce immediate duplicate reversals.
+
+## Known Issues / Legacy Files
+
+- Root `login.php` appears to be a legacy snippet that references `admin/connect.php` and a `student` table that are not part of the current architecture.
+- Active login flows are under:
+  - `admin/index.php` + `admin/login.php`
+  - `guard/index.php` + `guard/login.php`
+
+## Security Notes (Current State)
+
+This codebase currently uses patterns that are not production-safe by default:
+
+- Plain-text passwords in database and login checks
+- SQL built via string concatenation (risk of SQL injection)
+- Session/auth hardening is minimal
+
+Recommended hardening before production:
+
+1. Use `password_hash()` / `password_verify()`
+2. Replace raw queries with prepared statements
+3. Add CSRF protection for state-changing requests
+4. Regenerate sessions on login and tighten cookie/session config
+5. Add input validation and output escaping consistently
+
+## Troubleshooting
+
+### Database connection failed
+
+- Verify MySQL is running.
+- Confirm database `attendance` exists.
+- Check credentials in `admin/db_connect.php`.
+
+### Blank page or PHP warning/fatal
+
+- Enable PHP error display in local dev:
+  - `display_errors=On`
+  - `error_reporting=E_ALL`
+- Check Apache/PHP error logs in XAMPP.
+
+### Visitor records missing fields
+
+- If full data mode is disabled, guards can complete missing data in `guard/home.php`.
+- Admin can enable strict collection mode in `admin/home.php`.
+
+## License
+
+No explicit license file is present in this repository.
+If you plan to share or deploy this project, add a license file first.
