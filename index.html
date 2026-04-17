@@ -426,6 +426,24 @@
 
     const consentStatus = localStorage.getItem("npcCookieConsent");
 
+    // Track monthly visits
+    const currentDate = new Date();
+    const currentMonth = currentDate.getFullYear() + "-" + String(currentDate.getMonth() + 1).padStart(2, "0");
+    const storedMonth = localStorage.getItem("npcVisitMonth");
+    let visitCount = parseInt(localStorage.getItem("npcVisitCount")) || 0;
+
+    if (storedMonth !== currentMonth) {
+      // Reset count for new month
+      visitCount = 1;
+      localStorage.setItem("npcVisitMonth", currentMonth);
+    } else {
+      // Increment existing month count
+      visitCount++;
+    }
+
+    localStorage.setItem("npcVisitCount", visitCount);
+    console.log("Monthly visits: " + visitCount + " (Month: " + currentMonth + ")");
+
     if (!consentStatus) {
       setTimeout(() => {
         cookieBanner.classList.add("show");
