@@ -1398,6 +1398,16 @@ p { color: var(--text-light); font-size: 1rem; line-height: 1.8; }
   gap: 1rem;
   padding: 0.9rem 1rem;
   border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  cursor: move;
+  user-select: none;
+  touch-action: none;
+}
+
+.color-scheme-widget__header button,
+.color-scheme-widget__body button,
+.color-scheme-widget__body input {
+  user-select: auto;
+  touch-action: auto;
 }
 
 .color-scheme-widget__eyebrow {

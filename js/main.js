@@ -3,8 +3,19 @@
    ============================================ */
 
 const COLOR_SCHEME_STORAGE_KEY = 'amrColorSchemeCustom';
+const COLOR_SCHEME_WIDGET_POSITION_KEY = 'amrColorSchemeWidgetPosition';
 
 const SAMPLE_PALETTE_FALLBACKS = [
+  {
+    id: 'original-default',
+    label: 'Original Default',
+    note: 'Current AMR theme',
+    sourceBase: null,
+    primary: '#5aaa1e',
+    secondary: '#f44336',
+    background: '#ffffff',
+    text: '#1e2a10',
+  },
   {
     id: 'palette-1',
     label: 'Palette 1',
@@ -61,6 +72,29 @@ function safeLocalStorageSet(key, value) {
   } catch {
     // Ignore storage failures in restricted environments.
   }
+}
+
+function getStoredWidgetPosition() {
+  const raw = safeLocalStorageGet(COLOR_SCHEME_WIDGET_POSITION_KEY);
+  if (!raw) return null;
+
+  try {
+    const parsed = JSON.parse(raw);
+    const left = Number(parsed.left);
+    const top = Number(parsed.top);
+
+    if (!Number.isFinite(left) || !Number.isFinite(top)) {
+      return null;
+    }
+
+    return { left, top };
+  } catch {
+    return null;
+  }
+}
+
+function saveWidgetPosition(left, top) {
+  safeLocalStorageSet(COLOR_SCHEME_WIDGET_POSITION_KEY, JSON.stringify({ left, top }));
 }
 
 function normalizeHexColor(value, fallback) {
@@ -214,6 +248,10 @@ function getStoredCustomPalette() {
 }
 
 async function loadPaletteSource(fallback) {
+  if (!fallback.sourceBase) {
+    return fallback;
+  }
+
   const urls = [`${fallback.sourceBase}.json`, `${fallback.sourceBase}.css`];
 
   for (const url of urls) {
@@ -349,7 +387,16 @@ async function initColorSchemeSelector() {
 
   document.body.appendChild(widget);
 
+  const storedPosition = getStoredWidgetPosition();
+  if (storedPosition) {
+    widget.style.left = `${storedPosition.left}px`;
+    widget.style.top = `${storedPosition.top}px`;
+    widget.style.right = 'auto';
+    widget.style.bottom = 'auto';
+  }
+
   const paletteList = widget.querySelector('.color-scheme-widget__palette-list');
+  const header = widget.querySelector('.color-scheme-widget__header');
   const toggleButton = widget.querySelector('.color-scheme-widget__toggle');
   const statusEl = widget.querySelector('.color-scheme-widget__status');
   const saveButton = widget.querySelector('.color-scheme-widget__save');
@@ -359,6 +406,81 @@ async function initColorSchemeSelector() {
   const textInput = widget.querySelector('#amrTextColor');
 
   const paletteButtons = new Map();
+
+  let dragState = null;
+
+  const clampPosition = (left, top) => {
+    const margin = 8;
+    const maxLeft = Math.max(margin, window.innerWidth - widget.offsetWidth - margin);
+    const maxTop = Math.max(margin, window.innerHeight - widget.offsetHeight - margin);
+
+    return {
+      left: Math.min(Math.max(margin, left), maxLeft),
+      top: Math.min(Math.max(margin, top), maxTop),
+    };
+  };
+
+  const setWidgetPosition = (left, top, persist = false) => {
+    const next = clampPosition(left, top);
+    widget.style.left = `${next.left}px`;
+    widget.style.top = `${next.top}px`;
+    widget.style.right = 'auto';
+    widget.style.bottom = 'auto';
+    if (persist) {
+      saveWidgetPosition(next.left, next.top);
+    }
+  };
+
+  if (!storedPosition) {
+    requestAnimationFrame(() => {
+      const margin = 20;
+      const startLeft = margin;
+      const startTop = margin;
+      setWidgetPosition(startLeft, startTop, false);
+    });
+  }
+
+  if (header) {
+    header.addEventListener('pointerdown', (event) => {
+      if (event.target.closest('button, input, label, select, textarea, a')) {
+        return;
+      }
+
+      dragState = {
+        pointerId: event.pointerId,
+        startX: event.clientX,
+        startY: event.clientY,
+        left: widget.getBoundingClientRect().left,
+        top: widget.getBoundingClientRect().top,
+      };
+
+      header.setPointerCapture(event.pointerId);
+      event.preventDefault();
+    });
+
+    header.addEventListener('pointermove', (event) => {
+      if (!dragState || dragState.pointerId !== event.pointerId) {
+        return;
+      }
+
+      const deltaX = event.clientX - dragState.startX;
+      const deltaY = event.clientY - dragState.startY;
+      setWidgetPosition(dragState.left + deltaX, dragState.top + deltaY, false);
+    });
+
+    const endDrag = (event) => {
+      if (!dragState || dragState.pointerId !== event.pointerId) {
+        return;
+      }
+
+      const rect = widget.getBoundingClientRect();
+      setWidgetPosition(rect.left, rect.top, true);
+      dragState = null;
+    };
+
+    header.addEventListener('pointerup', endDrag);
+    header.addEventListener('pointercancel', endDrag);
+  }
 
   const syncInputs = (palette) => {
     primaryInput.value = normalizeHexColor(palette.primary, SAMPLE_PALETTE_FALLBACKS[0].primary);
