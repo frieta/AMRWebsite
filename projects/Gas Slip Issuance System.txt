@@ -1,0 +1,288 @@
+# AMR Gas Slip Issuance System
+
+## 1. Document Purpose
+
+This document provides formal system documentation for the AMR Gas Slip Issuance System. It describes the system purpose, major features, user roles, business workflow, security controls, and operational details needed for implementation, administration, and maintenance.
+
+For role-specific operational steps, see [ROLE_BASED_USER_GUIDE.md](ROLE_BASED_USER_GUIDE.md).
+
+## 2. System Overview
+
+The AMR Gas Slip Issuance System is a Laravel-based internal web application used to manage fuel requests, gas slip issuance, printing, claim tracking, and audit logging. It is designed for controlled and traceable processing of fuel-related transactions within an organization.
+
+The system supports role-based access so that each user can only access the functions required by their responsibility. It also records operational activity to support monitoring, review, and accountability.
+
+## 3. Objectives
+
+- Centralize fuel request submission and approval.
+- Generate gas slips with controlled numbering and print history.
+- Track issuance, claiming, and reconciliation of gas slips.
+- Maintain master data for users, vehicles, drivers, and gas stations.
+- Provide notifications and audit logs for transparency.
+- Enforce security policies for authentication, authorization, and session control.
+
+## 4. Technology Stack
+
+- Framework: Laravel
+- Language: PHP
+- Database: MySQL or MariaDB
+- Frontend: Blade templates, Laravel Vite assets
+- PDF output: DomPDF or equivalent PDF generator
+- Environment: XAMPP or similar local PHP stack
+
+## 5. Core Features
+
+### 5.1 Authentication and Session Management
+
+- Secure login and logout flow.
+- Session-based authentication.
+- Inactivity timeout protection.
+- Password hashing using bcrypt.
+- Strong password enforcement for administrative accounts.
+
+### 5.2 Role-Based Access Control
+
+The system uses role restrictions to separate duties:
+
+| Role | Main Responsibilities |
+|---|---|
+| ADMIN | Full access, user management, master data management, fuel request approvals, gas slip issuance and printing, review access |
+| ISSUER | Create gas slips, print slips, claim slips, manage daily issuance work |
+| REVIEWER | View-only access to reports, logs, and records |
+| REQUESTOR | Submit and view fuel requests |
+
+### 5.3 Master Data Management
+
+Administrative users can maintain the key reference data used by the system:
+
+- Users
+- Vehicles
+- Drivers
+- Gas stations
+- Managed devices
+
+### 5.4 Fuel Request Management
+
+- Requestors can submit fuel requests.
+- Requests can be viewed individually or as a list.
+- Admin and authorized issuer users can review all requests.
+- Requests can be approved or rejected by admin/issuer users.
+- During approval, gas station selection is required and the approved amount may be adjusted.
+- Approval auto-generates a linked gas slip record.
+
+### 5.5 Gas Slip Issuance
+
+- Authorized users can create gas slips directly or via auto-generation from approved fuel requests.
+- During fuel request approval, the approver selects the gas station to be used on the generated slip.
+- The system assigns a sequential control number.
+- Gas slips store the requested liters, amount, vehicle, driver, station, and purpose details.
+- Fuel request purpose is mapped to travel purpose when matched and retained in remarks as fallback.
+- Issued slips can be printed and later claimed.
+
+### 5.6 Controlled Printing
+
+- First print is logged.
+- Reprints require justification.
+- Print count is tracked.
+- Reprinted copies are marked clearly.
+- Gas slip print format uses portrait orientation and half-letter page size (5.5" x 8.5") to match dot matrix output requirements.
+
+### 5.7 Claims and Reconciliation
+
+- Issued slips can be marked as claimed.
+- Claimed liters, claimed total cost, and SI No. are required when marking as claimed.
+- Odometer reading is optional.
+- Reviewers can inspect claimed records for reporting and reconciliation.
+
+### 5.8 Notifications
+
+- The system maintains user notifications.
+- Users can mark notifications as read individually or in bulk.
+- Unread counts and live notification streams are available for UI updates.
+- Stream reconnection uses last-notification tracking to prevent duplicate replay of old notifications.
+
+### 5.9 Activity Logging and Audit Trail
+
+- Authentication events are logged.
+- Master data changes are logged.
+- Slip issuance, printing, reprinting, approval, and claim activities are recorded.
+
+## 6. Functional Modules
+
+### 6.1 Authentication Module
+
+Handles login, logout, session validation, and account access control.
+
+### 6.2 Dashboard Module
+
+Provides a landing page for authenticated users and acts as the application entry point after login.
+
+### 6.3 Notification Module
+
+Provides notification listing, unread count retrieval, read status updates, and stream-based delivery for the interface.
+
+### 6.4 Admin Master Data Module
+
+Supports CRUD operations for:
+
+- Users
+- Vehicles
+- Drivers
+- Gas stations
+- Managed devices
+
+### 6.5 Fuel Request Module
+
+Supports request creation, request viewing, request updating, and approval handling.
+
+### 6.6 Gas Slip Module
+
+Supports slip creation, detail viewing, claiming, and printing.
+
+### 6.7 Review and Reporting Module
+
+Provides read-only access to:
+
+- Gas slips
+- Activity logs
+- Claimed slip reports
+- Master data reference lists
+
+## 7. System Workflow
+
+### 7.1 Login Workflow
+
+1. A user opens the login page.
+2. The user submits credentials.
+3. The system validates the credentials and account status.
+4. A successful login opens the dashboard.
+5. Failed attempts and successful access are logged.
+
+### 7.2 Fuel Request Workflow
+
+1. A requestor creates a new fuel request.
+2. The request stores vehicle, driver, purpose, requested date, and quantity and/or amount details.
+3. The request can be viewed by the requestor.
+4. Admin or issuer users can review all requests.
+5. During approval, the approver selects the gas station and may revise the amount if needed.
+6. The request is approved or rejected.
+7. If approved, the system auto-generates a linked gas slip.
+
+### 7.3 Gas Slip Issuance Workflow
+
+1. An authorized admin or issuer opens the new gas slip screen.
+2. The admin or issuer selects the required operational details.
+3. The system creates a unique control number.
+4. During fuel request approval, the approver chooses the target gas station.
+5. For approved requests, the system auto-generates the slip and links it to the source request.
+6. Travel purpose is set by purpose-name match when available, with purpose remarks fallback preserved.
+7. The slip is stored with its issuance details and initial status.
+8. The slip can be printed immediately or later.
+
+### 7.4 Print and Reprint Workflow
+
+1. An authorized admin or issuer prints the slip.
+2. The system increments the print count and logs the event.
+3. If a reprint is requested, a reason must be provided.
+4. The reprint is marked clearly and also logged.
+
+### 7.5 Claim Workflow
+
+1. The slip is later marked as claimed.
+2. Claimed liters, claimed total cost, and SI No. are encoded.
+3. Odometer reading may be encoded if available.
+4. The record becomes available for review and reconciliation.
+
+### 7.6 Review and Reporting Workflow
+
+1. Reviewers open read-only report screens.
+2. They can inspect slips, claimed records, and activity logs.
+3. The reports support oversight and auditing.
+
+## 8. Data Model Overview
+
+The system is built around the following main data entities:
+
+| Entity | Purpose |
+|---|---|
+| users | Stores user accounts and role assignments |
+| roles | Defines access roles |
+| vehicles | Stores vehicle master data |
+| drivers | Stores driver master data |
+| gas_stations | Stores station reference data |
+| travel_purposes | Stores approved trip or purpose categories |
+| fuel_requests | Stores fuel request transactions |
+| gas_slips | Stores issued gas slip records |
+| gas_slip_print_logs | Stores print and reprint history |
+| notifications | Stores user notifications |
+| activity_logs | Stores audit events |
+
+## 9. Key Business Rules
+
+- Only authenticated users may access the application.
+- Role permissions determine what a user can view or manage.
+- Admin users can issue gas slips and print/reprint slips.
+- Gas slip control numbers must remain sequential and unique.
+- Print activity must always be recorded.
+- Reprints must require a reason.
+- Administrative and master data changes must be logged.
+- Notifications may be marked as read individually or in bulk.
+- Inactive or unauthorized users must not access restricted functions.
+
+## 10. Security Controls
+
+- Bcrypt password hashing.
+- Session timeout protection.
+- Role-based route protection.
+- Audit logging for critical actions.
+- CSRF protection for form submissions.
+- Controlled printing with reprint justification.
+- Separation of duties between request, issuance, and review functions.
+
+## 11. Main Application Routes
+
+The application is organized around these primary routes:
+
+- /login
+- /dashboard
+- /notifications
+- /master/users
+- /master/vehicles
+- /master/drivers
+- /master/gas-stations
+- /master/managed-devices
+- /gas-slips
+- /fuel-requests
+- /reviews/gas-slips
+- /reviews/activity-log
+- /reviews/claimed-report
+
+## 12. Installation and Startup Summary
+
+1. Configure the database and environment settings.
+2. Run migrations and seeders.
+3. Start the Laravel application.
+4. Open the login page in a browser.
+5. Sign in using an authorized account.
+
+For implementation notes and setup guidance, see [README.md](../README.md) and [IMPLEMENTATION_PLAN.md](IMPLEMENTATION_PLAN.md).
+
+## 13. Operational Notes
+
+- Keep database backups before data resets or bulk maintenance.
+- Review activity logs regularly for audit compliance.
+- Ensure roles are assigned correctly before user onboarding.
+- Verify that notification and print flows are functioning after deployment.
+- Use the review module for periodical record checking.
+
+## 14. Maintenance Considerations
+
+- Validate all master data before issuing slips.
+- Preserve print logs for accountability.
+- Periodically review inactive accounts.
+- Clear temporary cache and optimize configuration after environment changes.
+- Update documentation whenever business rules or routes change.
+
+## 15. Conclusion
+
+The AMR Gas Slip Issuance System provides a secure and traceable process for managing fuel requests, gas slip issuance, printing, and review. Its role-based architecture, logging features, and controlled workflow support operational accountability and formal recordkeeping.

@@ -22,6 +22,7 @@ Core assets and scripts:
 - Responsive navigation and layout
 - Timed hero card slider on Home page
 - Equipment image slider on Quality page
+- Cookie consent banner on Home page (Accept/Decline with saved preference)
 - Scroll-based reveal animations
 - Contact form UI submission feedback (frontend only)
 - Offline-ready assets (no external CDNs required)
@@ -30,7 +31,7 @@ Core assets and scripts:
 
 ### Home Hero Slider (Index)
 The Home hero background and mini cards pull images from:
-- `Images/index/`
+- `images/Index/`
 
 Current image set:
 - `IMG_6738.jpg`
@@ -56,6 +57,17 @@ Current image set:
 - Expanded Home slider to 6 images.
 - Updated Quality slider to use equipment/premises image folder.
 - Fixed Home hero mini-card active-state behavior so only the active card renders full size.
+- Added a responsive cookie consent banner on the Home page.
+- Added monthly visit tracking on the Home page via localStorage keys `npcVisitCount` and `npcVisitMonth`.
+
+## Cookie Consent and Visit Tracking
+
+Home page behavior (`index.html`):
+- Cookie consent status is stored in localStorage under `npcCookieConsent`.
+
+Note:
+- This is client-side tracking per browser/device only.
+- It is not a centralized site-wide counter and does not write to a server file/database.
 
 ## Local Development
 
