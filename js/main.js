@@ -3,60 +3,12 @@
    ============================================ */
 
 const COLOR_SCHEME_STORAGE_KEY = 'amrColorSchemeCustom';
-const COLOR_SCHEME_WIDGET_POSITION_KEY = 'amrColorSchemeWidgetPosition';
-
-const SAMPLE_PALETTE_FALLBACKS = [
-  {
-    id: 'original-default',
-    label: 'Original Default',
-    note: 'Current AMR theme',
-    sourceBase: null,
-    primary: '#5aaa1e',
-    secondary: '#f44336',
-    background: '#ffffff',
-    text: '#1e2a10',
-  },
-  {
-    id: 'palette-1',
-    label: 'Palette 1',
-    note: 'Fresh green brand',
-    sourceBase: 'colorschemes/1',
-    primary: '#5aaa1e',
-    secondary: '#f44336',
-    background: '#ffffff',
-    text: '#1e2a10',
-  },
-  {
-    id: 'palette-2',
-    label: 'Palette 2',
-    note: 'Deep ocean contrast',
-    sourceBase: 'colorschemes/2',
-    primary: '#0f766e',
-    secondary: '#f59e0b',
-    background: '#f8fffe',
-    text: '#10343a',
-  },
-  {
-    id: 'palette-3',
-    label: 'Palette 3',
-    note: 'Warm modern neutral',
-    sourceBase: 'colorschemes/3',
-    primary: '#7c3aed',
-    secondary: '#ec4899',
-    background: '#fffafc',
-    text: '#2d1738',
-  },
-  {
-    id: 'palette-4',
-    label: 'Palette 4',
-    note: 'Soft slate accent',
-    sourceBase: 'colorschemes/4',
-    primary: '#334155',
-    secondary: '#14b8a6',
-    background: '#f8fafc',
-    text: '#0f172a',
-  },
-];
+const ORIGINAL_DEFAULT_THEME = {
+  primary: '#5aaa1e',
+  secondary: '#f44336',
+  background: '#ffffff',
+  text: '#1e2a10',
+};
 
 function safeLocalStorageGet(key) {
   try {
@@ -74,39 +26,10 @@ function safeLocalStorageSet(key, value) {
   }
 }
 
-function getStoredWidgetPosition() {
-  const raw = safeLocalStorageGet(COLOR_SCHEME_WIDGET_POSITION_KEY);
-  if (!raw) return null;
-
-  try {
-    const parsed = JSON.parse(raw);
-    const left = Number(parsed.left);
-    const top = Number(parsed.top);
-
-    if (!Number.isFinite(left) || !Number.isFinite(top)) {
-      return null;
-    }
-
-    return { left, top };
-  } catch {
-    return null;
-  }
-}
-
-function saveWidgetPosition(left, top) {
-  safeLocalStorageSet(COLOR_SCHEME_WIDGET_POSITION_KEY, JSON.stringify({ left, top }));
-}
-
 function normalizeHexColor(value, fallback) {
   const candidate = String(value || '').trim();
   const shortHex = /^#([0-9a-f]{3})$/i;
   const longHex = /^#([0-9a-f]{6})$/i;
-  const fallbackCandidate = String(fallback || '').trim();
-  const safeFallback = longHex.test(fallbackCandidate)
-    ? fallbackCandidate.toLowerCase()
-    : shortHex.test(fallbackCandidate)
-      ? `#${fallbackCandidate.slice(1).split('').map((char) => char + char).join('')}`.toLowerCase()
-      : '#000000';
 
   if (longHex.test(candidate)) {
     return candidate.toLowerCase();
@@ -116,7 +39,7 @@ function normalizeHexColor(value, fallback) {
     return `#${candidate.slice(1).split('').map((char) => char + char).join('')}`.toLowerCase();
   }
 
-  return safeFallback;
+  return fallback || '#000000';
 }
 
 function hexToRgb(hex) {
@@ -149,51 +72,11 @@ function shadeHexColor(color, percent) {
   return rgbToHex(base.r * factor, base.g * factor, base.b * factor);
 }
 
-function paletteFromJsonPayload(payload, fallback) {
-  const source = Array.isArray(payload) ? {
-    primary: payload[0],
-    secondary: payload[1],
-    background: payload[2],
-    text: payload[3],
-  } : (payload || {});
-
-  const colors = source.colors || source.vars || source.variables || source;
-
-  return {
-    id: fallback.id,
-    label: source.label || source.name || fallback.label,
-    note: source.note || fallback.note,
-    sourceBase: fallback.sourceBase,
-    primary: normalizeHexColor(colors.primary, fallback.primary),
-    secondary: normalizeHexColor(colors.secondary || colors.accent, fallback.secondary),
-    background: normalizeHexColor(colors.background || colors.bg, fallback.background),
-    text: normalizeHexColor(colors.text || colors.foreground, fallback.text),
-  };
-}
-
-function paletteFromCssPayload(text, fallback) {
-  const read = (token, fallbackValue) => {
-    const match = text.match(new RegExp(`--${token}\\s*:\\s*([^;]+);`, 'i'));
-    return normalizeHexColor(match ? match[1] : '', fallbackValue);
-  };
-
-  return {
-    id: fallback.id,
-    label: fallback.label,
-    note: fallback.note,
-    sourceBase: fallback.sourceBase,
-    primary: read('primary', fallback.primary),
-    secondary: read('secondary', read('accent', fallback.secondary)),
-    background: read('background', fallback.background),
-    text: read('text', fallback.text),
-  };
-}
-
 function buildThemeVars(palette) {
-  const primary = normalizeHexColor(palette.primary, SAMPLE_PALETTE_FALLBACKS[0].primary);
-  const secondary = normalizeHexColor(palette.secondary, SAMPLE_PALETTE_FALLBACKS[0].secondary);
-  const background = normalizeHexColor(palette.background, SAMPLE_PALETTE_FALLBACKS[0].background);
-  const text = normalizeHexColor(palette.text, SAMPLE_PALETTE_FALLBACKS[0].text);
+  const primary = normalizeHexColor(palette.primary, ORIGINAL_DEFAULT_THEME.primary);
+  const secondary = normalizeHexColor(palette.secondary, ORIGINAL_DEFAULT_THEME.secondary);
+  const background = normalizeHexColor(palette.background, ORIGINAL_DEFAULT_THEME.background);
+  const text = normalizeHexColor(palette.text, ORIGINAL_DEFAULT_THEME.text);
 
   return {
     '--primary': primary,
@@ -234,339 +117,18 @@ function getStoredCustomPalette() {
   try {
     const parsed = JSON.parse(raw);
     return {
-      id: 'custom',
-      label: parsed.label || 'Custom Scheme',
-      note: 'Saved locally',
-      primary: normalizeHexColor(parsed.primary, SAMPLE_PALETTE_FALLBACKS[0].primary),
-      secondary: normalizeHexColor(parsed.secondary, SAMPLE_PALETTE_FALLBACKS[0].secondary),
-      background: normalizeHexColor(parsed.background, SAMPLE_PALETTE_FALLBACKS[0].background),
-      text: normalizeHexColor(parsed.text, SAMPLE_PALETTE_FALLBACKS[0].text),
+      primary: normalizeHexColor(parsed.primary, ORIGINAL_DEFAULT_THEME.primary),
+      secondary: normalizeHexColor(parsed.secondary, ORIGINAL_DEFAULT_THEME.secondary),
+      background: normalizeHexColor(parsed.background, ORIGINAL_DEFAULT_THEME.background),
+      text: normalizeHexColor(parsed.text, ORIGINAL_DEFAULT_THEME.text),
     };
   } catch {
     return null;
   }
 }
 
-async function loadPaletteSource(fallback) {
-  if (!fallback.sourceBase) {
-    return fallback;
-  }
-
-  const urls = [`${fallback.sourceBase}.json`, `${fallback.sourceBase}.css`];
-
-  for (const url of urls) {
-    try {
-      const response = await fetch(url, { cache: 'no-store' });
-      if (!response.ok) {
-        continue;
-      }
-
-      const contentType = (response.headers.get('content-type') || '').toLowerCase();
-      const text = await response.text();
-
-      if (url.endsWith('.json')) {
-        const trimmed = text.trim();
-        if (!(trimmed.startsWith('{') || trimmed.startsWith('['))) {
-          continue;
-        }
-        if (!contentType.includes('json') && !trimmed.startsWith('{') && !trimmed.startsWith('[')) {
-          continue;
-        }
-
-        return paletteFromJsonPayload(JSON.parse(trimmed), fallback);
-      }
-
-      if (!text.includes('--primary') && !text.includes('--secondary') && !text.includes('--background') && !text.includes('--text')) {
-        continue;
-      }
-
-      return paletteFromCssPayload(text, fallback);
-    } catch {
-      // Try the next candidate or fall back to built-in values.
-    }
-  }
-
-  return fallback;
-}
-
-async function loadSamplePalettes() {
-  const loadedPalettes = await Promise.all(
-    SAMPLE_PALETTE_FALLBACKS.map((fallback) => loadPaletteSource(fallback))
-  );
-
-  return loadedPalettes;
-}
-
-function createPaletteButton(palette) {
-  const button = document.createElement('button');
-  button.type = 'button';
-  button.className = 'color-scheme-widget__palette';
-  button.dataset.paletteId = palette.id;
-
-  const info = document.createElement('span');
-  info.className = 'color-scheme-widget__palette-info';
-
-  const name = document.createElement('span');
-  name.className = 'color-scheme-widget__palette-name';
-  name.textContent = palette.label;
-
-  const note = document.createElement('span');
-  note.className = 'color-scheme-widget__palette-note';
-  note.textContent = palette.note;
-
-  info.append(name, note);
-
-  const swatches = document.createElement('span');
-  swatches.className = 'color-scheme-widget__swatches';
-  swatches.setAttribute('aria-hidden', 'true');
-
-  [palette.primary, palette.secondary, palette.background, palette.text].forEach((color) => {
-    const swatch = document.createElement('span');
-    swatch.style.background = color;
-    swatches.appendChild(swatch);
-  });
-
-  button.append(info, swatches);
-  return button;
-}
-
-async function initColorSchemeSelector() {
-  if (!document.body || document.getElementById('colorSchemeWidget')) {
-    return;
-  }
-
-  const palettes = await loadSamplePalettes();
-  const defaultPalette = palettes[0] || SAMPLE_PALETTE_FALLBACKS[0];
-  const storedCustomPalette = getStoredCustomPalette();
-  let currentPalette = storedCustomPalette || defaultPalette;
-
-  applyTheme(currentPalette);
-
-  const widget = document.createElement('aside');
-  widget.id = 'colorSchemeWidget';
-  widget.className = 'color-scheme-widget';
-  widget.setAttribute('aria-label', 'Color scheme selector');
-  widget.innerHTML = `
-    <div class="color-scheme-widget__header">
-      <div>
-        <span class="color-scheme-widget__eyebrow">Client Review</span>
-        <span class="color-scheme-widget__title">Color Scheme Selector</span>
-      </div>
-      <button type="button" class="color-scheme-widget__toggle" aria-expanded="true" aria-label="Collapse color scheme selector">−</button>
-    </div>
-    <div class="color-scheme-widget__body">
-      <div class="color-scheme-widget__section">
-        <span class="color-scheme-widget__label">Sample palettes</span>
-        <div class="color-scheme-widget__palette-list"></div>
-      </div>
-      <div class="color-scheme-widget__section">
-        <span class="color-scheme-widget__label">Custom scheme</span>
-        <div class="color-scheme-widget__fields">
-          <div class="color-scheme-widget__field">
-            <label for="amrPrimaryColor">Primary</label>
-            <input id="amrPrimaryColor" type="color" value="#5aaa1e" />
-          </div>
-          <div class="color-scheme-widget__field">
-            <label for="amrSecondaryColor">Secondary</label>
-            <input id="amrSecondaryColor" type="color" value="#f44336" />
-          </div>
-          <div class="color-scheme-widget__field">
-            <label for="amrBackgroundColor">Background</label>
-            <input id="amrBackgroundColor" type="color" value="#ffffff" />
-          </div>
-          <div class="color-scheme-widget__field">
-            <label for="amrTextColor">Text</label>
-            <input id="amrTextColor" type="color" value="#1e2a10" />
-          </div>
-        </div>
-        <button type="button" class="color-scheme-widget__save">Save Custom Scheme</button>
-      </div>
-      <div class="color-scheme-widget__status" aria-live="polite"></div>
-    </div>
-  `;
-
-  document.body.appendChild(widget);
-
-  const storedPosition = getStoredWidgetPosition();
-  if (storedPosition) {
-    widget.style.left = `${storedPosition.left}px`;
-    widget.style.top = `${storedPosition.top}px`;
-    widget.style.right = 'auto';
-    widget.style.bottom = 'auto';
-  }
-
-  const paletteList = widget.querySelector('.color-scheme-widget__palette-list');
-  const header = widget.querySelector('.color-scheme-widget__header');
-  const toggleButton = widget.querySelector('.color-scheme-widget__toggle');
-  const statusEl = widget.querySelector('.color-scheme-widget__status');
-  const saveButton = widget.querySelector('.color-scheme-widget__save');
-  const primaryInput = widget.querySelector('#amrPrimaryColor');
-  const secondaryInput = widget.querySelector('#amrSecondaryColor');
-  const backgroundInput = widget.querySelector('#amrBackgroundColor');
-  const textInput = widget.querySelector('#amrTextColor');
-
-  const paletteButtons = new Map();
-
-  let dragState = null;
-
-  const clampPosition = (left, top) => {
-    const margin = 8;
-    const maxLeft = Math.max(margin, window.innerWidth - widget.offsetWidth - margin);
-    const maxTop = Math.max(margin, window.innerHeight - widget.offsetHeight - margin);
-
-    return {
-      left: Math.min(Math.max(margin, left), maxLeft),
-      top: Math.min(Math.max(margin, top), maxTop),
-    };
-  };
-
-  const setWidgetPosition = (left, top, persist = false) => {
-    const next = clampPosition(left, top);
-    widget.style.left = `${next.left}px`;
-    widget.style.top = `${next.top}px`;
-    widget.style.right = 'auto';
-    widget.style.bottom = 'auto';
-    if (persist) {
-      saveWidgetPosition(next.left, next.top);
-    }
-  };
-
-  if (!storedPosition) {
-    requestAnimationFrame(() => {
-      const margin = 20;
-      const startLeft = margin;
-      const startTop = margin;
-      setWidgetPosition(startLeft, startTop, false);
-    });
-  }
-
-  if (header) {
-    header.addEventListener('pointerdown', (event) => {
-      if (event.target.closest('button, input, label, select, textarea, a')) {
-        return;
-      }
-
-      dragState = {
-        pointerId: event.pointerId,
-        startX: event.clientX,
-        startY: event.clientY,
-        left: widget.getBoundingClientRect().left,
-        top: widget.getBoundingClientRect().top,
-      };
-
-      header.setPointerCapture(event.pointerId);
-      event.preventDefault();
-    });
-
-    header.addEventListener('pointermove', (event) => {
-      if (!dragState || dragState.pointerId !== event.pointerId) {
-        return;
-      }
-
-      const deltaX = event.clientX - dragState.startX;
-      const deltaY = event.clientY - dragState.startY;
-      setWidgetPosition(dragState.left + deltaX, dragState.top + deltaY, false);
-    });
-
-    const endDrag = (event) => {
-      if (!dragState || dragState.pointerId !== event.pointerId) {
-        return;
-      }
-
-      const rect = widget.getBoundingClientRect();
-      setWidgetPosition(rect.left, rect.top, true);
-      dragState = null;
-    };
-
-    header.addEventListener('pointerup', endDrag);
-    header.addEventListener('pointercancel', endDrag);
-  }
-
-  const syncInputs = (palette) => {
-    primaryInput.value = normalizeHexColor(palette.primary, SAMPLE_PALETTE_FALLBACKS[0].primary);
-    secondaryInput.value = normalizeHexColor(palette.secondary, SAMPLE_PALETTE_FALLBACKS[0].secondary);
-    backgroundInput.value = normalizeHexColor(palette.background, SAMPLE_PALETTE_FALLBACKS[0].background);
-    textInput.value = normalizeHexColor(palette.text, SAMPLE_PALETTE_FALLBACKS[0].text);
-  };
-
-  const clearActivePalette = () => {
-    paletteButtons.forEach((button) => button.classList.remove('is-active'));
-  };
-
-  const markActivePalette = (paletteId) => {
-    clearActivePalette();
-    const activeButton = paletteButtons.get(paletteId);
-    if (activeButton) {
-      activeButton.classList.add('is-active');
-    }
-  };
-
-  const getCustomPaletteFromInputs = () => ({
-    id: 'custom',
-    label: 'Custom Scheme',
-    note: 'Unsaved preview',
-    primary: primaryInput.value,
-    secondary: secondaryInput.value,
-    background: backgroundInput.value,
-    text: textInput.value,
-  });
-
-  const setStatus = (message) => {
-    statusEl.textContent = message;
-  };
-
-  palettes.forEach((palette) => {
-    const button = createPaletteButton(palette);
-    button.addEventListener('click', () => {
-      currentPalette = palette;
-      applyTheme(palette);
-      syncInputs(palette);
-      markActivePalette(palette.id);
-      setStatus(`${palette.label} loaded.`);
-    });
-    paletteList.appendChild(button);
-    paletteButtons.set(palette.id, button);
-  });
-
-  if (currentPalette.id === 'custom') {
-    syncInputs(currentPalette);
-    setStatus('Custom scheme restored from localStorage.');
-  } else {
-    syncInputs(currentPalette);
-    markActivePalette(currentPalette.id);
-    setStatus(`${currentPalette.label} loaded by default.`);
-  }
-
-  const previewCustomPalette = () => {
-    currentPalette = getCustomPaletteFromInputs();
-    applyTheme(currentPalette);
-    clearActivePalette();
-    setStatus('Previewing custom scheme. Click Save to persist it.');
-  };
-
-  [primaryInput, secondaryInput, backgroundInput, textInput].forEach((input) => {
-    input.addEventListener('input', previewCustomPalette);
-  });
-
-  saveButton.addEventListener('click', () => {
-    const customPalette = getCustomPaletteFromInputs();
-    applyTheme(customPalette);
-    safeLocalStorageSet(COLOR_SCHEME_STORAGE_KEY, JSON.stringify(customPalette));
-    currentPalette = customPalette;
-    clearActivePalette();
-    setStatus('Custom scheme saved to localStorage.');
-  });
-
-  toggleButton.addEventListener('click', () => {
-    const collapsed = widget.classList.toggle('is-collapsed');
-    toggleButton.setAttribute('aria-expanded', String(!collapsed));
-    toggleButton.textContent = collapsed ? '+' : '−';
-    toggleButton.setAttribute('aria-label', collapsed ? 'Expand color scheme selector' : 'Collapse color scheme selector');
-  });
-}
-
 const storedTheme = getStoredCustomPalette();
-applyTheme(storedTheme || SAMPLE_PALETTE_FALLBACKS[0]);
+applyTheme(storedTheme || ORIGINAL_DEFAULT_THEME);
 
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -734,7 +296,5 @@ document.addEventListener('DOMContentLoaded', () => {
       setInterval(advance, intervalMs);
     }
   }
-
-  initColorSchemeSelector();
 
 });
