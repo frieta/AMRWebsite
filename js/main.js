@@ -5,7 +5,7 @@
 const COLOR_SCHEME_STORAGE_KEY = 'amrColorSchemeCustom';
 const ORIGINAL_DEFAULT_THEME = {
   primary: '#5aaa1e',
-  secondary: '#f44336',
+  secondary: '#ff9800',
   background: '#ffffff',
   text: '#1e2a10',
 };
