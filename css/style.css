@@ -985,7 +985,7 @@ p { color: var(--text); font-size: 1rem; line-height: 1.8; }
 .lab-card h3 { color: var(--primary); font-size: 1.05rem; }
 .lab-card p { font-size: 0.88rem; margin-bottom: 1.25rem; }
 .lab-features { display: flex; flex-direction: column; gap: 0.625rem; }
-.lab-feature { display: flex; align-items: center; gap: 0.625rem; font-size: 0.85rem; color: var(--text-light); }
+.lab-feature { display: flex; align-items: center; gap: 0.625rem; font-size: 0.85rem; color: var(--text); }
 .lab-feature::before { content: '▸'; color: var(--primary); font-size: 0.75rem; }
 
 .equipment-slider-block {
