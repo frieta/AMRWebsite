@@ -375,7 +375,7 @@ p { color: var(--text); font-size: 1rem; line-height: 1.8; }
   border-radius: 50%;
 }
 .hero h1 { color: var(--white); margin-bottom: 1.5rem; }
-.hero h1 em { color: black; font-style: normal; }
+.hero h1 em { color: rgb(19, 151, 7); font-style: normal; -webkit-text-stroke: 0.2px white; text-shadow: -1px -1px 0 white, 1px -1px 0 white, -1px 1px 0 white, 1px 1px 0 white; }
 .hero-sub { font-size: 1.1rem; color: rgba(255,255,255,0.75); margin-bottom: 2.5rem; }
 .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 3rem; }
 .hero-timed-details {
