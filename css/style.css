@@ -29,6 +29,25 @@
   --font-sans: 'Inter', system-ui, sans-serif;
 }
 
+/* Ensure certifications stay horizontal (override responsive rules) */
+.cert-display .cert-items {
+  flex-wrap: nowrap !important;
+  flex-direction: row !important;
+  overflow-x: auto !important;
+  -webkit-overflow-scrolling: touch;
+}
+.cert-display .cert-items::-webkit-scrollbar { display: none; }
+
+
+/* Final override: keep certification items horizontal even on small screens */
+.cert-display .cert-items {
+  flex-wrap: nowrap;
+  flex-direction: row !important;
+  overflow-x: auto !important;
+}
+.cert-display .cert-items::-webkit-scrollbar { display: none; }
+
+
 /* --- Reset & Base --- */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; font-size: 16px; }
@@ -842,26 +861,7 @@ p { color: var(--text); font-size: 1rem; line-height: 1.8; }
   margin-bottom: 0.5rem;
 }
 
-/* --- Certifications (contact page) --- */
-.cert-display {
-  background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 60%, #3a8c14 100%);
-  color: var(--white);
-  padding: 1.25rem;
-  border-radius: 12px;
-  box-shadow: var(--shadow-sm);
-  margin-top: 1.5rem;
-}
-.cert-display h4 { color: rgba(255,255,255,0.98); margin-bottom: 0.75rem; }
-.cert-display .cert-items { display: flex; gap: 1rem; flex-wrap: wrap; align-items: stretch; }
-.cert-display .cert-item {
-  flex: 1 1 180px;
-  text-align: center;
-  background: rgba(255,255,255,0.04);
-  padding: 0.85rem;
-  border-radius: 8px;
-}
-.cert-display .cert-item-name { color: rgba(255,255,255,0.95); font-weight:700; margin-top:0.6rem; }
-.cert-display .cert-item-desc { color: rgba(255,255,255,0.85); font-size:0.85rem; margin-top:0.25rem; }
+/* Certifications (contact page) - styles consolidated further down in the file */
 /* ============================================
    PRODUCT LINES PAGE
    ============================================ */
@@ -1195,18 +1195,26 @@ p { color: var(--text); font-size: 1rem; line-height: 1.8; }
 .cert-items {
   display: flex;
   gap: 1rem;
-  align-items: center;
-  justify-content: center;
-  position: relative;
+  align-items: absolute;
+  justify-content: flex-start;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  padding-bottom: 0.5rem;
+  -webkit-overflow-scrolling: touch;
+  position: center;
   z-index: 1;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
+.cert-items::-webkit-scrollbar { display: none; }
 .cert-item {
-  flex: 1;
+  flex: 0 0 260px;
+  max-width: 260px;
   background: rgba(255,255,255,0.06);
   border: 1px solid rgba(255,255,255,0.06);
   border-radius: var(--radius);
   padding: 1rem;
-  min-height: 200px;
+  min-height: 180px;
   text-align: center;
   display: flex;
   flex-direction: column;
@@ -1225,6 +1233,18 @@ p { color: var(--text); font-size: 1rem; line-height: 1.8; }
   padding: 2.5rem;
   box-shadow: var(--shadow-sm);
 }
+
+/* Force horizontal layout for certification items on all screen sizes */
+.cert-display .cert-items {
+  flex-wrap: nowrap;
+  flex-direction: row;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.cert-display .cert-items::-webkit-scrollbar { display: none; }
+
 .contact-form-wrap h3 { color: var(--primary); margin-bottom: 0.5rem; font-size: 1.3rem; }
 .contact-form-wrap > p { margin-bottom: 2rem; font-size: 0.9rem; }
 .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
@@ -1514,3 +1534,13 @@ p { color: var(--text); font-size: 1rem; line-height: 1.8; }
   .hero-mini-card:nth-child(5) { left: calc(58% + 270px); opacity: 0; }
   .hero-mini-card:nth-child(6) { left: calc(58% + 360px); opacity: 0; }
 }
+
+/* Ensure certifications stay horizontal (override responsive rules) */
+.cert-display .cert-items {
+  flex-wrap: nowrap !important;
+  flex-direction: row !important;
+  overflow-x: auto !important;
+  -webkit-overflow-scrolling: touch;
+}
+.cert-display .cert-items::-webkit-scrollbar { display: none; }
+
