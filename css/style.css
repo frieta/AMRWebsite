@@ -1556,6 +1556,22 @@ p { color: var(--text); font-size: 1rem; line-height: 1.8; }
   .hero-mini-card:nth-child(6) { left: calc(58% + 360px); opacity: 0; }
 }
 
+/* Mobile-specific: make certifications stack vertically for better readability */
+@media (max-width: 480px) {
+  .cert-display .cert-items {
+    flex-direction: column !important;
+    flex-wrap: nowrap !important;
+    overflow-x: visible !important;
+  }
+  .cert-display .cert-items::-webkit-scrollbar { display: auto; }
+  .cert-display .cert-item {
+    flex: 1 1 auto !important;
+    max-width: none !important;
+    width: 100% !important;
+    margin-bottom: 0.75rem;
+  }
+}
+
 /* Ensure certifications stay horizontal (override responsive rules) */
 .cert-display .cert-items {
   flex-wrap: nowrap !important;
