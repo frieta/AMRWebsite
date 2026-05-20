@@ -1244,6 +1244,27 @@ p { color: var(--text); font-size: 1rem; line-height: 1.8; }
   -ms-overflow-style: none;
 }
 .cert-display .cert-items::-webkit-scrollbar { display: none; }
+.contact-form-wrap h3 { color: var(--primary); margin-bottom: 0.5rem; font-size: 1.3rem; }
+
+/* --- Footer products responsive layout --- */
+.footer-products {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.footer-products li { padding: 0.15rem 0; }
+
+@media (max-width: 768px) {
+  .footer-products { columns: 2; -webkit-columns:2; -moz-columns:2; column-gap: 1rem; }
+}
+
+@media (max-width: 480px) {
+  .footer-products { columns: 2; -webkit-columns:2; -moz-columns:2; column-gap: 0.75rem; }
+  .footer-products li { break-inside: avoid-column; }
+  /* Reduce cert card width on small screens to fit more horizontally */
+  .cert-item { flex: 0 0 160px !important; max-width: 160px !important; }
+  .cert-item-icon img { max-width: 100px !important; }
+}
 
 .contact-form-wrap h3 { color: var(--primary); margin-bottom: 0.5rem; font-size: 1.3rem; }
 .contact-form-wrap > p { margin-bottom: 2rem; font-size: 0.9rem; }
