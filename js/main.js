@@ -251,10 +251,12 @@ document.addEventListener('DOMContentLoaded', () => {
       let current = 0;
       const intervalMs = 4500;
 
+      const getHeroCards = () => Array.from(timedStack.querySelectorAll('.hero-mini-card'));
+
       const syncHeroText = () => {
-        const cards = timedStack.querySelectorAll('.hero-mini-card');
+        const cards = getHeroCards();
         if (!cards.length) return;
-        const activeCard = cards[0];
+        const activeCard = cards.find((card) => card.classList.contains('active')) || cards[0];
         placeEl.textContent = activeCard.getAttribute('data-place') || '';
         titleEl.textContent = activeCard.getAttribute('data-title') || '';
       };
@@ -277,11 +279,21 @@ document.addEventListener('DOMContentLoaded', () => {
       };
 
       const advance = () => {
-        const cards = timedStack.querySelectorAll('.hero-mini-card');
+        const cards = getHeroCards();
         if (cards.length > 1) {
-          cards[0].classList.remove('active');
-          timedStack.appendChild(cards[0]);
-          cards[1].classList.add('active');
+          const activeCard = cards.find((card) => card.classList.contains('active')) || cards[0];
+          const nextCard = activeCard.nextElementSibling || timedStack.firstElementChild;
+
+          if (activeCard) {
+            activeCard.classList.remove('active');
+            timedStack.appendChild(activeCard);
+          }
+
+          if (nextCard && nextCard.classList.contains('hero-mini-card')) {
+            nextCard.classList.add('active');
+          } else if (timedStack.firstElementChild) {
+            timedStack.firstElementChild.classList.add('active');
+          }
         }
 
         current = (current + 1) % Math.max(bgSlides.length, 1);
