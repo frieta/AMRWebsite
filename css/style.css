@@ -1287,6 +1287,15 @@ p { color: var(--text); font-size: 1rem; line-height: 1.8; }
 }
 
 @media (max-width: 768px) {
+  .container { padding: 0 1rem; }
+  h1 { font-size: 1.75rem; line-height: 1.2; }
+  h2 { font-size: 1.4rem; line-height: 1.3; }
+  h3 { font-size: 1.1rem; }
+  p { font-size: 0.95rem; }
+  .section { padding: 2.5rem 0; }
+  .page-hero { padding: 2rem 0; }
+  .page-hero h1 { font-size: 1.5rem; }
+  .breadcrumb { font-size: 0.85rem; }
   .hamburger { display: flex; }
   .header-cta .btn { display: none; }
   .main-nav {
@@ -1330,11 +1339,15 @@ p { color: var(--text); font-size: 1rem; line-height: 1.8; }
   .features-grid { grid-template-columns: 1fr; }
   .legacy-inner { grid-template-columns: 1fr; gap: 3rem; }
   .cert-badges { flex-direction: row; }
+  .cert-items { flex-direction: column; }
+  .cert-item { min-height: auto; }
   .story-section { grid-template-columns: 1fr; }
   .story-visual { display: none; }
   .vm-grid { grid-template-columns: 1fr; }
   .quality-intro { grid-template-columns: 1fr; gap: 2rem; }
   .labs-grid { grid-template-columns: 1fr; }
+  .lab-card { padding: 1.5rem; }
+  .lab-card-header { flex-direction: column; }
   .equipment-slider-stage { height: 470px; }
   .equipment-slide {
     width: 110px;
@@ -1359,17 +1372,43 @@ p { color: var(--text); font-size: 1rem; line-height: 1.8; }
   }
   .contact-layout { grid-template-columns: 1fr; }
   .form-grid { grid-template-columns: 1fr; }
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    font-size: 16px;
+    padding: 0.75rem;
+  }
+  .contact-info { margin-bottom: 2rem; }
   .footer-grid { grid-template-columns: 1fr 1fr; gap: 2rem; }
   .footer-brand { grid-column: 1 / -1; }
+  .footer-grid h4 { font-size: 0.9rem; }
 }
 
 @media (max-width: 480px) {
+  .container { padding: 0 0.75rem; }
+  h1 { font-size: 1.4rem; }
+  h2 { font-size: 1.2rem; }
+  h3 { font-size: 1rem; }
+  .section { padding: 1.75rem 0; }
+  .page-hero { padding: 1.5rem 0; }
+  .page-hero h1 { font-size: 1.25rem; }
+  .page-hero p { font-size: 0.9rem; }
+  .btn { padding: 0.75rem 1.25rem; font-size: 0.9rem; }
+  .btn-lg { padding: 0.85rem 1.5rem; }
   .footer-grid { grid-template-columns: 1fr; }
   .cert-badges { flex-direction: column; }
+  .cert-items { flex-direction: column; gap: 0.75rem; }
+  .cert-item { min-height: auto; padding: 0.75rem; }
+  .cert-item-icon img { max-width: 80px !important; }
+  .cert-item-name { font-size: 0.75rem; }
+  .cert-item-desc { font-size: 0.65rem; }
   .hero-stats { flex-direction: column; gap: 1rem; }
+  .hero-stats div { font-size: 0.85rem; }
   .hero-visual { display: none; }
   .process-timeline::before { left: 28px; }
-  .step-number { width: 56px; height: 56px; }
+  .step-number { width: 56px; height: 56px; font-size: 1.2rem; }
+  .step-title { font-size: 0.95rem; }
+  .step-description { font-size: 0.85rem; }
   .equipment-slider-stage { height: 400px; }
   .equipment-slide {
     width: 80px;
@@ -1382,4 +1421,16 @@ p { color: var(--text); font-size: 1rem; line-height: 1.8; }
   .equipment-slide:nth-child(n + 6) { left: calc(68% + 264px); }
   .equipment-slide-title { font-size: 1.2rem; }
   .equipment-slide-desc { display: none; }
+  .form-grid { grid-template-columns: 1fr; }
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    font-size: 16px;
+    padding: 0.75rem;
+  }
+  .contact-card { padding: 1rem; }
+  .contact-card-icon { font-size: 1.5rem; }
+  .footer-col { margin-bottom: 1rem; }
+  .footer-col h4 { font-size: 0.85rem; font-weight: 700; margin-bottom: 0.5rem; }
+  .footer-col ul { font-size: 0.85rem; }
 }
