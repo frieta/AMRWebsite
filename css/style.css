@@ -1572,6 +1572,26 @@ p { color: var(--text); font-size: 1rem; line-height: 1.8; }
   }
 }
 
+/* Make cert-display items match .cert-badge appearance on mobile */
+@media (max-width: 480px) {
+  .cert-display .cert-items { gap: 1rem; }
+  .cert-display .cert-item {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 0.5rem !important;
+    background: rgba(255,255,255,0.08) !important;
+    border: 1px solid rgba(255,255,255,0.15) !important;
+    border-radius: var(--radius-lg) !important;
+    padding: 1.75rem 2rem !important;
+    text-align: center !important;
+    min-width: 0 !important;
+  }
+  .cert-display .cert-item-name { color: var(--accent-light) !important; font-family: var(--font-serif) !important; font-size: 1.05rem !important; font-weight:700 !important; }
+  .cert-display .cert-item-desc { color: rgba(255,255,255,0.6) !important; }
+}
+
 /* Ensure certifications stay horizontal (override responsive rules) */
 .cert-display .cert-items {
   flex-wrap: nowrap !important;
