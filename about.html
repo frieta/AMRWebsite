@@ -13,6 +13,28 @@
     .animate-delay-2 { transition-delay: 0.2s; }
     .animate-delay-3 { transition-delay: 0.3s; }
     .animate-delay-4 { transition-delay: 0.4s; }
+    /* Paddle figure caption positioning */
+    .paddle-figure { position: relative; display: inline-block; }
+    .paddle-caption {
+      position: absolute;
+      right: 0%;
+      bottom: 30%;
+      background: rgba(255, 255, 255, 0);
+      color: #fff;
+      padding: 0.35rem 0.6rem;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      line-height: 1;
+      box-shadow: 0 6px 18px rgba(255, 255, 255, 0);
+      transform: translateY(-4%);
+    }
+    .blackqoute-caption {
+      position: absolute;
+      bottom: 37%;
+    }
+    @media (max-width: 480px) {
+      .paddle-caption { right: 6%; bottom: 6%; font-size:0.8rem; }
+    }
   </style>
 </head>
 <body>
@@ -65,14 +87,16 @@
         <h2>Every Great Journey Begins with a Single Paddle Stroke.</h2>
         <p>Established in 1999, A.M. Rieta's story is a journey of faith, perseverance, and purpose. Our founder and President, <strong>Mr. Alvin M. Rieta</strong>, started with a paddle that represents our humble beginnings.</p>
         <div class="quote-block">
+          <img src="images/about/amr.jpg" alt="Paddle" class="paddle-img" style="max-width: 100%; height: auto; display: block;" />
           <blockquote>
             "I am grateful for all the pulling and stretching I've experienced. Despite the pain, paddling helped me find and hone my purpose."
           </blockquote>
           <cite>— Mr. Alvin M. Rieta, Founder &amp; President</cite>
-           <figure class="paddle-figure" style="margin-top:1rem;">
+          <figure class="paddle-figure" style="margin-top:1rem;">
             <img src="images/about/Paddle.png" alt="Paddle" class="paddle-img" style="max-width: 100%; height: auto; display: block;" />
+            <cite class="paddle-caption">— Where it all started: A.M.Rieta's first mixer.</cite>
           </figure>
-          <blockquote>
+          <blockquote class="blackqoute-caption">
             "Every great journey begins with a single paddle stroke."
           </blockquote>
         </div>
