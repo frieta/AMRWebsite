@@ -249,7 +249,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (timedStack && placeEl && titleEl && progressBar) {
       let current = 0;
-      const intervalMs = 8500;
+      const intervalMs = 7500;
 
       const getHeroCards = () => Array.from(timedStack.querySelectorAll('.hero-mini-card'));
 
