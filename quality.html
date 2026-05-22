@@ -60,30 +60,75 @@
   </div>
 </section>
 
-<!-- ========== CERTIFICATIONS BANNER ========== -->
-<section class="legacy-section" style="padding:3.5rem 0;">
+<!-- ========== VICINITY SLIDER ========== -->
+<section class="section">
   <div class="container">
-    <div style="position:relative; z-index:1;">
-      <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:2rem;">
-        <div>
-          <span class="section-label" style="color:var(--accent-light);">Our Certifications</span>
-          <h2 style="color:var(--white); font-size:1.75rem;">Internationally Recognized &amp; Locally Certified</h2>
+    <div class="vicinity-slider-block">
+      <div class="section-header section-header--left" style="margin-bottom:2rem;">
+        <span class="section-label">Facility Tour</span>
+        <h2>Our Premises &amp; Facilities</h2>
+        <p>Explore the modern, well-maintained spaces where quality and safety are built into every corner of our operations.</p>
+        <div class="divider divider--left"></div>
+      </div>
+
+      <div class="vicinity-slider-stage" id="vicinitySlider">
+        <div class="vicinity-slide">
+          <img class="vicinity-slide-img" src="images/Index/main_facility.jpg" alt="A.M. Rieta Main Manufacturing Facility" />
+          <div class="vicinity-slide-content">
+            <div class="vicinity-slide-title">Main Manufacturing Facility</div>
+            <div class="vicinity-slide-desc">Production floor designed with GMP compliance and controlled workflow.</div>
+          </div>
         </div>
-        <div style="display:flex; gap:1.5rem; flex-wrap:wrap;">
-          <div class="cert-badge">
-            <div class="cert-badge-icon"><img src="images/about/iso_badge.png" alt="ISO badge" style="max-width: 150px; height:auto; display:block; margin:0 auto;" /></div>
-            <div class="cert-badge-name">ISO 22716:2007</div>
-            <div class="cert-badge-desc">Good Manufacturing Practices — Cosmetics</div>
+        <div class="vicinity-slide">
+          <img class="vicinity-slide-img" src="images/Index/quality_control_lab.jpg" alt="Quality Control Laboratory" />
+          <div class="vicinity-slide-content">
+            <div class="vicinity-slide-title">Quality Control Laboratory</div>
+            <div class="vicinity-slide-desc">Advanced testing facilities for microbiology, physicochemical, and organoleptic analysis.</div>
           </div>
-          <div class="cert-badge">
-            <div class="cert-badge-icon"><img src="images/about/FDA_logo.png" alt="FDA logo" style="max-width:150px; height:auto; display:block; margin:0 auto;" /></div>
-            <div class="cert-badge-name">FDA GMP</div>
-            <div class="cert-badge-desc">Philippine FDA — Drug &amp; Cosmetic Manufacturing</div>
+        </div>
+        <div class="vicinity-slide">
+          <img class="vicinity-slide-img" src="images/Index/production_area.jpg" alt="Production Area" />
+          <div class="vicinity-slide-content">
+            <div class="vicinity-slide-title">Production Area</div>
+            <div class="vicinity-slide-desc">Organized zones for material handling, equipment operation, and product assembly.</div>
           </div>
-          <div class="cert-badge">
-            <div class="cert-badge-icon"><img src="images/about/hdip.png" alt="HALAL certification" style="max-width:150px; height:auto; display:block; margin:0 auto;" /></div>
-            <div class="cert-badge-name">NF/C 1097026011-05</div>
-            <div class="cert-badge-desc">Halal Certified Manufacturing Company</div>
+        </div>
+        <div class="vicinity-slide">
+          <img class="vicinity-slide-img" src="images/Index/warehouse.jpg" alt="Warehouse &amp; Storage" />
+          <div class="vicinity-slide-content">
+            <div class="vicinity-slide-title">Warehouse &amp; Storage</div>
+            <div class="vicinity-slide-desc">Climate-controlled storage for raw materials and finished goods with full traceability.</div>
+          </div>
+        </div>
+        <div class="vicinity-slide">
+          <img class="vicinity-slide-img" src="images/Index/office_spaces.jpg" alt="Office &amp; Conference Spaces" />
+          <div class="vicinity-slide-content">
+            <div class="vicinity-slide-title">Office &amp; Conference Spaces</div>
+            <div class="vicinity-slide-desc">Professional meeting and documentation areas supporting client communications and compliance.</div>
+          </div>
+        </div>
+      </div>
+      <div class="vicinity-slider-controls" aria-label="Vicinity slider controls">
+        <button type="button" class="vicinity-slider-btn" data-vic-dir="prev" aria-label="Previous facility image">&#10094;</button>
+        <button type="button" class="vicinity-slider-btn" data-vic-dir="next" aria-label="Next facility image">&#10095;</button>
+      </div>
+
+      <div class="vicinity-modal" id="vicinityModal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="vicinityModalTitle">
+        <div class="vicinity-modal-backdrop" data-vicinity-close></div>
+        <div class="vicinity-modal-panel" role="document">
+          <button type="button" class="vicinity-modal-nav vicinity-modal-prev" aria-label="Previous facility details" data-vicinity-modal-dir="prev">&#10094;</button>
+          <button type="button" class="vicinity-modal-nav vicinity-modal-next" aria-label="Next facility details" data-vicinity-modal-dir="next">&#10095;</button>
+          <button type="button" class="vicinity-modal-close" aria-label="Close facility details" data-vicinity-close>&times;</button>
+          <div class="vicinity-modal-media">
+            <img class="vicinity-modal-image" id="vicinityModalImage" src="" alt="" />
+          </div>
+          <div class="vicinity-modal-body">
+            <h3 id="vicinityModalTitle"></h3>
+            <p class="vicinity-modal-desc" id="vicinityModalDesc"></p>
+            <div class="vicinity-modal-details">
+              <h4>Highlights</h4>
+              <ul id="vicinityModalDetails"></ul>
+            </div>
           </div>
         </div>
       </div>
@@ -92,11 +137,11 @@
 </section>
 
 <!-- ========== QUALITY POLICY & PREMISES ========== -->
-<section class="section">
+<section class="section section--hero-bg">
   <div class="container">
     <div class="section-header">
       <span class="section-label">Quality System</span>
-      <h2>Our Quality Policy &amp; Premises</h2>
+      <h2 class="quality-policysection-title">Our Quality Policy &amp; Premises</h2>
       <div class="divider"></div>
     </div>
     <div class="quality-intro">

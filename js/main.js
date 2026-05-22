@@ -494,6 +494,169 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
+  // --- Vicinity Slider ---
+  const vicinitySlider = document.getElementById('vicinitySlider');
+  const vicinitySliderBlock = vicinitySlider ? vicinitySlider.closest('.vicinity-slider-block') : null;
+  const vicinityControls = vicinitySliderBlock ? vicinitySliderBlock.querySelector('.vicinity-slider-controls') : null;
+
+  if (vicinitySlider && vicinityControls) {
+    const getVicinityScrollStep = () => {
+      const firstSlide = vicinitySlider.querySelector('.vicinity-slide');
+      if (!firstSlide) return 320;
+
+      const slideWidth = firstSlide.getBoundingClientRect().width;
+      const styles = window.getComputedStyle(vicinitySlider);
+      const gap = parseFloat(styles.gap || styles.columnGap || '0') || 0;
+      return slideWidth + gap;
+    };
+
+    const handleVicinityNext = () => {
+      vicinitySlider.scrollBy({ left: getVicinityScrollStep(), behavior: 'smooth' });
+    };
+
+    const handleVicinityPrev = () => {
+      vicinitySlider.scrollBy({ left: -getVicinityScrollStep(), behavior: 'smooth' });
+    };
+
+    const vicinityPrevButton = vicinityControls ? vicinityControls.querySelector('[data-vic-dir="prev"]') : null;
+    const vicinityNextButton = vicinityControls ? vicinityControls.querySelector('[data-vic-dir="next"]') : null;
+
+    if (vicinityPrevButton) {
+      vicinityPrevButton.addEventListener('click', handleVicinityPrev);
+    }
+
+    if (vicinityNextButton) {
+      vicinityNextButton.addEventListener('click', handleVicinityNext);
+    }
+
+    // Vicinity modal and click handler
+    const vicinityModal = document.getElementById('vicinityModal');
+    const vicinityModalImage = document.getElementById('vicinityModalImage');
+    const vicinityModalTitle = document.getElementById('vicinityModalTitle');
+    const vicinityModalDesc = document.getElementById('vicinityModalDesc');
+    const vicinityModalDetails = document.getElementById('vicinityModalDetails');
+    const vicinityModalCloseBtn = vicinityModal ? vicinityModal.querySelector('.vicinity-modal-close') : null;
+    const vicinityModalCloseTriggers = vicinityModal ? vicinityModal.querySelectorAll('[data-vicinity-close]') : [];
+    const vicinityModalPrevBtn = vicinityModal ? vicinityModal.querySelector('[data-vicinity-modal-dir="prev"]') : null;
+    const vicinityModalNextBtn = vicinityModal ? vicinityModal.querySelector('[data-vicinity-modal-dir="next"]') : null;
+
+    // Vicinity details data
+    const vicinityDetails = {
+      'Main Manufacturing Facility': {
+        desc: 'Production floor designed with GMP compliance and controlled workflow.',
+        details: [
+          'Production capacity: 10,000–20,000 pieces per 8 hours (varies by product)',
+          'Controlled personnel flow pathways to prevent contamination',
+          'Dedicated material receiving, quarantine, and release zones',
+          'Equipment layout optimized for GMP-compliant manufacturing',
+          'Environmental controls to maintain product integrity and safety'
+        ]
+      },
+      'Quality Control Laboratory': {
+        desc: 'Advanced testing facilities for microbiology, physicochemical, and organoleptic analysis.',
+        details: [
+          'Microbiology lab with biosafety cabinets and annually calibrated autoclaves',
+          'Physicochemical lab with calibrated instruments for pH, viscosity, and conductivity',
+          '3–5 day testing cycle prior to product release',
+          'Environmental swab testing and gram staining procedures',
+          'Stability and compatibility testing capabilities'
+        ]
+      },
+      'Production Area': {
+        desc: 'Organized zones for material handling, equipment operation, and product assembly.',
+        details: [
+          'Multiple mixing vessels ranging from 100 kg to 2 tons capacity',
+          'High-speed filling machines producing 5,000–15,000 pieces per 8 hours',
+          'Dedicated zones for material staging and quality checks',
+          'Equipment surfaces sanitized and maintained regularly',
+          'Waste management and disposal areas separated from production zones'
+        ]
+      },
+      'Warehouse & Storage': {
+        desc: 'Climate-controlled storage for raw materials and finished goods with full traceability.',
+        details: [
+          'Separate zones for raw materials, work-in-process, and finished goods',
+          'Climate and humidity control to maintain product stability',
+          'Full batch traceability and lot tracking systems',
+          'Regular inventory audits and stock rotation procedures',
+          'Quarantine area for testing and hold samples'
+        ]
+      },
+      'Office & Conference Spaces': {
+        desc: 'Professional meeting and documentation areas supporting client communications and compliance.',
+        details: [
+          'Dedicated documentation and records management area',
+          'Quality management and compliance personnel offices',
+          'Client meeting and negotiation rooms',
+          'Training and instruction areas for staff development',
+          'Regulatory file and certification storage'
+        ]
+      }
+    };
+
+    const slides = Array.from(vicinitySlider.querySelectorAll('.vicinity-slide'));
+    let activeVicinityIndex = 0;
+
+    const closeVicinityModal = () => {
+      if (!vicinityModal) return;
+      vicinityModal.classList.remove('open');
+      document.body.classList.remove('vicinity-modal-open');
+    };
+
+    const openVicinityModalByIndex = (targetIndex) => {
+      if (!vicinityModal || !slides.length) return;
+      const total = slides.length;
+      const nextIndex = ((targetIndex % total) + total) % total;
+      const slide = slides[nextIndex];
+      const title = slide.querySelector('.vicinity-slide-title')?.textContent?.trim();
+      const detailData = title ? vicinityDetails[title] : null;
+      const image = slide.querySelector('.vicinity-slide-img');
+
+      if (!title || !detailData || !image) return;
+
+      activeVicinityIndex = nextIndex;
+      vicinityModalImage.src = image.src;
+      vicinityModalImage.alt = title;
+      vicinityModalTitle.textContent = title;
+      vicinityModalDesc.textContent = detailData.desc;
+      vicinityModalDetails.innerHTML = detailData.details.map(d => `<li>${d}</li>`).join('');
+      vicinityModal.classList.add('open');
+      document.body.classList.add('vicinity-modal-open');
+      if (vicinityModalCloseBtn) vicinityModalCloseBtn.focus();
+    };
+
+    slides.forEach((slide, index) => {
+      slide.setAttribute('role', 'button');
+      slide.setAttribute('tabindex', '0');
+      slide.addEventListener('click', () => openVicinityModalByIndex(index));
+      slide.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          openVicinityModalByIndex(index);
+        }
+      });
+    });
+
+    vicinityModalCloseTriggers.forEach((el) => {
+      el.addEventListener('click', closeVicinityModal);
+    });
+
+    if (vicinityModalPrevBtn) {
+      vicinityModalPrevBtn.addEventListener('click', () => openVicinityModalByIndex(activeVicinityIndex - 1));
+    }
+
+    if (vicinityModalNextBtn) {
+      vicinityModalNextBtn.addEventListener('click', () => openVicinityModalByIndex(activeVicinityIndex + 1));
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (!vicinityModal || !vicinityModal.classList.contains('open')) return;
+      if (e.key === 'Escape') closeVicinityModal();
+      if (e.key === 'ArrowRight') openVicinityModalByIndex(activeVicinityIndex + 1);
+      if (e.key === 'ArrowLeft') openVicinityModalByIndex(activeVicinityIndex - 1);
+    });
+  }
+
   // --- Home Page Timed Hero Card Animation ---
   const heroTimed = document.getElementById('homeHeroTimed');
   if (heroTimed) {
