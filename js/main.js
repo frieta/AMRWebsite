@@ -728,8 +728,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // --- Floating Messenger Chat Widget (temporarily disabled) ---
-  const ENABLE_FLOATING_CHAT_WIDGET = false;
+  // --- Floating Messenger Chat Widget ---
+  const ENABLE_FLOATING_CHAT_WIDGET = true;
   if (ENABLE_FLOATING_CHAT_WIDGET) {
     const existingChatWidget = document.querySelector('.chat-widget');
     if (!existingChatWidget) {
