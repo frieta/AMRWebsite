@@ -144,33 +144,61 @@ document.addEventListener('DOMContentLoaded', () => {
   // --- Mobile Nav Toggle ---
   const hamburger = document.querySelector('.hamburger');
   const mainNav = document.querySelector('.main-nav');
+  
   if (hamburger && mainNav) {
-    // Toggle menu on hamburger click
-    hamburger.addEventListener('click', (e) => {
-      e.stopPropagation();
-      hamburger.classList.toggle('open');
-      mainNav.classList.toggle('open');
-    });
-    
-    // Close menu when clicking on nav links
-    mainNav.querySelectorAll('a').forEach(link => {
-      link.addEventListener('click', () => {
-        // Allow the link to navigate before closing menu
-        hamburger.classList.remove('open');
-        mainNav.classList.remove('open');
-      });
-    });
-    
-    // Close when clicking outside header area
-    document.addEventListener('click', (e) => {
-      // Don't close if clicking on hamburger or nav itself
-      if (header.contains(e.target)) return;
-      // Don't close if clicking inside nav menu (except links which close it)
-      if (mainNav.contains(e.target) && !e.target.closest('a')) return;
-      
+    // Function to close menu
+    const closeMenu = () => {
       hamburger.classList.remove('open');
       mainNav.classList.remove('open');
-    });
+    };
+    
+    // Function to open menu
+    const openMenu = () => {
+      hamburger.classList.add('open');
+      mainNav.classList.add('open');
+    };
+    
+    // Toggle menu on hamburger click
+    const toggleMenu = (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      if (hamburger.classList.contains('open')) {
+        closeMenu();
+      } else {
+        openMenu();
+      }
+    };
+    
+    hamburger.addEventListener('click', toggleMenu, false);
+    hamburger.addEventListener('touchend', toggleMenu, false);
+    
+    // Use event delegation for nav links - works even if links are added dynamically
+    mainNav.addEventListener('click', (e) => {
+      // Check if clicked element or parent is a link
+      const link = e.target.closest('a');
+      if (link) {
+        // Close menu after link click
+        closeMenu();
+        // Don't prevent default - let the link navigate
+      }
+    }, false);
+    
+    mainNav.addEventListener('touchend', (e) => {
+      // Check if touched element or parent is a link
+      const link = e.target.closest('a');
+      if (link) {
+        // Close menu after link tap
+        closeMenu();
+        // Don't prevent default - let the link navigate
+      }
+    }, false);
+    
+    // Close menu when clicking outside of header
+    document.addEventListener('click', (e) => {
+      if (!header.contains(e.target)) {
+        closeMenu();
+      }
+    }, false);
   }
 
   // --- Active Nav Link ---
