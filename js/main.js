@@ -537,8 +537,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const vicinityModalDetails = document.getElementById('vicinityModalDetails');
     const vicinityModalCloseBtn = vicinityModal ? vicinityModal.querySelector('.vicinity-modal-close') : null;
     const vicinityModalCloseTriggers = vicinityModal ? vicinityModal.querySelectorAll('[data-vicinity-close]') : [];
-    const vicinityModalPrevBtn = vicinityModal ? vicinityModal.querySelector('[data-vicinity-modal-dir="prev"]') : null;
-    const vicinityModalNextBtn = vicinityModal ? vicinityModal.querySelector('[data-vicinity-modal-dir="next"]') : null;
 
     // Vicinity details data
     const vicinityDetails = {
@@ -641,12 +639,13 @@ document.addEventListener('DOMContentLoaded', () => {
       el.addEventListener('click', closeVicinityModal);
     });
 
-    if (vicinityModalPrevBtn) {
-      vicinityModalPrevBtn.addEventListener('click', () => openVicinityModalByIndex(activeVicinityIndex - 1));
-    }
-
-    if (vicinityModalNextBtn) {
-      vicinityModalNextBtn.addEventListener('click', () => openVicinityModalByIndex(activeVicinityIndex + 1));
+    if (vicinityModal) {
+      vicinityModal.querySelectorAll('[data-vicinity-modal-dir]').forEach((button) => {
+        button.addEventListener('click', () => {
+          const direction = button.getAttribute('data-vicinity-modal-dir');
+          openVicinityModalByIndex(activeVicinityIndex + (direction === 'next' ? 1 : -1));
+        });
+      });
     }
 
     document.addEventListener('keydown', (e) => {
