@@ -2314,6 +2314,98 @@ p { color: var(--text); font-size: 1rem; line-height: 1.8; }
   }
 }
 
+/* Global mobile safety net for readability on all pages */
+@media (max-width: 768px) {
+  html { -webkit-text-size-adjust: 100%; }
+  body { overflow-x: hidden; }
+  .container,
+  .container--narrow { padding-left: 1rem !important; padding-right: 1rem !important; }
+  .section-header,
+  .section-header--left { margin-bottom: 1.5rem; }
+  .section-header h2,
+  .section-header--left h2,
+  .page-hero h1,
+  .hero-content h1,
+  .quality-policysection-title { word-break: break-word; overflow-wrap: anywhere; }
+  .page-hero p,
+  .section-header p { max-width: none; font-size: 0.95rem; line-height: 1.6; }
+  .hero-inner,
+  .quality-intro,
+  .labs-grid,
+  .footer-grid,
+  .form-grid,
+  .contact-layout,
+  .vm-grid,
+  .features-grid,
+  .service-overview-grid,
+  .product-categories-grid,
+  .odm-note-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .hero-actions,
+  .hero-stats,
+  .cert-badges,
+  .footer-certs {
+    flex-direction: column !important;
+    align-items: stretch !important;
+  }
+  .hero-actions .btn,
+  .hero-stats > div,
+  .footer-certs .footer-cert {
+    width: 100%;
+  }
+  .service-overview-card,
+  .policy-card,
+  .premises-card,
+  .lab-card,
+  .contact-card,
+  .feature-card {
+    padding: 1.25rem !important;
+  }
+  .lab-card-header,
+  .premises-feature,
+  .control-item,
+  .mission-item,
+  .contact-card,
+  .footer-grid,
+  .footer-bottom {
+    align-items: flex-start;
+  }
+  .footer-bottom { gap: 0.75rem; }
+  .main-nav a { white-space: normal; }
+  .hero-mini-card,
+  .hero-visual,
+  .story-visual { max-width: 100%; }
+}
+
+@media (max-width: 480px) {
+  .container,
+  .container--narrow { padding-left: 0.8rem !important; padding-right: 0.8rem !important; }
+  .section { padding: 1.75rem 0; }
+  .page-hero { padding: 1.5rem 0 !important; }
+  .page-hero h1 { font-size: 1.25rem; line-height: 1.25; }
+  .page-hero p,
+  .section-header p { font-size: 0.88rem; line-height: 1.55; }
+  .btn { min-height: 44px; padding: 0.75rem 1rem; }
+  .hero-content { padding-top: 0.25rem; }
+  .hero-timed-stack { max-width: 280px; }
+  .hero-stats div,
+  .footer-col h4,
+  .footer-col ul,
+  .footer-brand p { font-size: 0.85rem; }
+  .contact-card,
+  .lab-card,
+  .service-overview-card,
+  .policy-card,
+  .premises-card,
+  .feature-card { padding: 1rem !important; }
+  .equipment-slider-stage,
+  .vicinity-slider-stage { min-height: 320px !important; }
+  .equipment-slide,
+  .vicinity-slide { flex-basis: 86vw !important; }
+  .footer-grid { gap: 1rem; }
+}
+
 /* Equipment slider arrow visibility enhancement */
 .equipment-slider-btn {
   background: rgba(23, 38, 12, 0.82) !important;
