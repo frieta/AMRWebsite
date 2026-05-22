@@ -144,22 +144,31 @@ document.addEventListener('DOMContentLoaded', () => {
   // --- Mobile Nav Toggle ---
   const hamburger = document.querySelector('.hamburger');
   const mainNav = document.querySelector('.main-nav');
+  const chatWidget = document.querySelector('.chat-widget');
   
   if (hamburger && mainNav) {
     // Function to close menu
     const closeMenu = () => {
       hamburger.classList.remove('open');
       mainNav.classList.remove('open');
+      // Re-enable chat widget when menu closes
+      if (!document.querySelector('.chat-widget') && ENABLE_FLOATING_CHAT_WIDGET) {
+        createChatWidget();
+      }
     };
     
     // Function to open menu
     const openMenu = () => {
       hamburger.classList.add('open');
       mainNav.classList.add('open');
+      // Disable chat widget when menu opens on mobile
+      if (window.innerWidth <= 768) {
+        destroyChatWidget();
+      }
     };
     
     // Toggle menu on hamburger click
-    const toggleMenu = (e) => {
+    hamburger.addEventListener('click', (e) => {
       e.preventDefault();
       e.stopPropagation();
       if (hamburger.classList.contains('open')) {
@@ -167,35 +176,24 @@ document.addEventListener('DOMContentLoaded', () => {
       } else {
         openMenu();
       }
-    };
-    
-    hamburger.addEventListener('click', toggleMenu, false);
-    hamburger.addEventListener('touchend', toggleMenu, false);
-    
-    // Use event delegation for nav links - works even if links are added dynamically
-    mainNav.addEventListener('click', (e) => {
-      // Check if clicked element or parent is a link
-      const link = e.target.closest('a');
-      if (link) {
-        // Close menu after link click
-        closeMenu();
-        // Don't prevent default - let the link navigate
-      }
     }, false);
     
-    mainNav.addEventListener('touchend', (e) => {
-      // Check if touched element or parent is a link
-      const link = e.target.closest('a');
-      if (link) {
-        // Close menu after link tap
-        closeMenu();
+    // Handle nav link clicks - close menu and allow navigation
+    const navLinks = mainNav.querySelectorAll('a');
+    navLinks.forEach(link => {
+      link.addEventListener('click', (e) => {
         // Don't prevent default - let the link navigate
-      }
-    }, false);
+        // Just close the menu (which re-enables chat)
+        closeMenu();
+      }, false);
+    });
     
-    // Close menu when clicking outside of header
+    // Close menu when clicking outside of header (but not on nav links)
     document.addEventListener('click', (e) => {
-      if (!header.contains(e.target)) {
+      // If click is inside header, don't close (nav links handle it)
+      if (header.contains(e.target)) return;
+      // Only close if menu is open
+      if (hamburger.classList.contains('open')) {
         closeMenu();
       }
     }, false);
@@ -763,11 +761,14 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // --- Floating Messenger Chat Widget ---
+  // --- Floating Messenger Chat Widget - Helper Functions ---
   const ENABLE_FLOATING_CHAT_WIDGET = true;
-  if (ENABLE_FLOATING_CHAT_WIDGET) {
+  
+  // Function to create and initialize chat widget
+  const createChatWidget = () => {
     const existingChatWidget = document.querySelector('.chat-widget');
-    if (!existingChatWidget) {
+    if (existingChatWidget) return; // Don't create if already exists
+    
     const chatWidget = document.createElement('div');
     chatWidget.className = 'chat-widget';
     chatWidget.innerHTML = `
@@ -776,7 +777,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <div class="chat-widget-avatar" aria-hidden="true">AMR</div>
           <div>
             <h3 class="chat-widget-title">Chat with A.M. Rieta</h3>
-            <p class="chat-widget-subtitle">We’ll continue in Messenger</p>
+            <p class="chat-widget-subtitle">We'll continue in Messenger</p>
           </div>
           <button type="button" class="chat-widget-close" aria-label="Close chat preview">&times;</button>
         </div>
@@ -790,7 +791,7 @@ document.addEventListener('DOMContentLoaded', () => {
               <a class="chat-widget-link" href="https://m.me/AMRietaLaboratory" target="_blank" rel="noopener noreferrer">Open Messenger chat</a>
             </div>
           </div>
-          <p class="chat-widget-note">You’ll be routed straight to the Page conversation thread.</p>
+          <p class="chat-widget-note">You'll be routed straight to the Page conversation thread.</p>
         </div>
       </div>
       <button type="button" class="chat-widget-fab" aria-label="Open chat">
@@ -803,10 +804,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const chatPanel = chatWidget.querySelector('.chat-widget-panel');
     const chatFab = chatWidget.querySelector('.chat-widget-fab');
     const chatClose = chatWidget.querySelector('.chat-widget-close');
-
-    const openChatWidget = () => {
-      chatWidget.classList.add('open');
-    };
 
     const closeChatWidget = () => {
       chatWidget.classList.remove('open');
@@ -824,13 +821,25 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
 
-      document.addEventListener('click', (event) => {
-        if (!chatWidget.classList.contains('open')) return;
-        if (!chatPanel.contains(event.target) && !chatFab.contains(event.target)) {
-          closeChatWidget();
-        }
-      });
+    document.addEventListener('click', (event) => {
+      if (!chatWidget.classList.contains('open')) return;
+      if (!chatPanel.contains(event.target) && !chatFab.contains(event.target)) {
+        closeChatWidget();
+      }
+    });
+  };
+  
+  // Function to destroy chat widget
+  const destroyChatWidget = () => {
+    const chatWidget = document.querySelector('.chat-widget');
+    if (chatWidget) {
+      chatWidget.remove();
     }
+  };
+  
+  // Initialize chat widget on page load
+  if (ENABLE_FLOATING_CHAT_WIDGET) {
+    createChatWidget();
   }
 
 });

@@ -36,7 +36,7 @@
   position: fixed;
   right: 1.25rem;
   bottom: 1.25rem;
-  z-index: 6500;
+  z-index: 1100;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
