@@ -160,6 +160,11 @@ document.addEventListener('DOMContentLoaded', () => {
     mainNav.querySelectorAll('a').forEach(link => {
       link.addEventListener('click', (e) => {
         e.stopPropagation();
+        // Close menu after navigation
+        setTimeout(() => {
+          hamburger.classList.remove('open');
+          mainNav.classList.remove('open');
+        }, 0);
       });
     });
   }
