@@ -149,13 +149,6 @@ document.addEventListener('DOMContentLoaded', () => {
       hamburger.classList.toggle('open');
       mainNav.classList.toggle('open');
     });
-    // Close on link click
-    mainNav.querySelectorAll('a').forEach(link => {
-      link.addEventListener('click', () => {
-        hamburger.classList.remove('open');
-        mainNav.classList.remove('open');
-      });
-    });
     // Close on outside click
     document.addEventListener('click', (e) => {
       if (!header.contains(e.target)) {
