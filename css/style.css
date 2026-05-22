@@ -1927,6 +1927,7 @@ p { color: var(--text); font-size: 1rem; line-height: 1.8; }
     font-size: 1.2rem;
   }
   .equipment-modal-nav button {
+    position: absolute;
     top: 25%;
   }
 }
