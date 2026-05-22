@@ -728,4 +728,72 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
+  /* // --- Floating Messenger Chat Widget ---
+  const existingChatWidget = document.querySelector('.chat-widget');
+  if (!existingChatWidget) {
+    const chatWidget = document.createElement('div');
+    chatWidget.className = 'chat-widget';
+    chatWidget.innerHTML = `
+      <div class="chat-widget-panel" aria-label="Messenger chat preview">
+        <div class="chat-widget-header">
+          <div class="chat-widget-avatar" aria-hidden="true">AMR</div>
+          <div>
+            <h3 class="chat-widget-title">Chat with A.M. Rieta</h3>
+            <p class="chat-widget-subtitle">We’ll continue in Messenger</p>
+          </div>
+          <button type="button" class="chat-widget-close" aria-label="Close chat preview">&times;</button>
+        </div>
+        <div class="chat-widget-body">
+          <div class="chat-widget-bubble chat-widget-bubble--system">
+            Hi! Need help with product development, quality, or manufacturing support?
+          </div>
+          <div class="chat-widget-bubble chat-widget-bubble--bridge">
+            Tap below to open a conversation with our Page in Messenger.
+            <div style="margin-top:0.8rem;">
+              <a class="chat-widget-link" href="https://m.me/AMRietaLaboratory" target="_blank" rel="noopener noreferrer">Open Messenger chat</a>
+            </div>
+          </div>
+          <p class="chat-widget-note">You’ll be routed straight to the Page conversation thread.</p>
+        </div>
+      </div>
+      <button type="button" class="chat-widget-fab" aria-label="Open chat">
+        <span class="chat-widget-fab-icon" aria-hidden="true">💬</span>
+        <span class="chat-widget-fab-label">Chat</span>
+      </button>
+    `;
+    document.body.appendChild(chatWidget);
+
+    const chatPanel = chatWidget.querySelector('.chat-widget-panel');
+    const chatFab = chatWidget.querySelector('.chat-widget-fab');
+    const chatClose = chatWidget.querySelector('.chat-widget-close');
+
+    const openChatWidget = () => {
+      chatWidget.classList.add('open');
+    };
+
+    const closeChatWidget = () => {
+      chatWidget.classList.remove('open');
+    };
+
+    chatFab.addEventListener('click', () => {
+      chatWidget.classList.toggle('open');
+    });
+
+    chatClose.addEventListener('click', closeChatWidget);
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && chatWidget.classList.contains('open')) {
+        closeChatWidget();
+      }
+    });
+
+    document.addEventListener('click', (event) => {
+      if (!chatWidget.classList.contains('open')) return;
+      if (!chatPanel.contains(event.target) && !chatFab.contains(event.target)) {
+        closeChatWidget();
+      }
+    });
+  }
+
 });
+ */
