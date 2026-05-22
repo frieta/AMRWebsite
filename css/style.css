@@ -1924,8 +1924,10 @@ p { color: var(--text); font-size: 1rem; line-height: 1.8; }
   .equipment-modal-nav {
     width: 42px;
     height: 42px;
-    top: 80%;
     font-size: 1.2rem;
+  }
+  .equipment-modal-nav button {
+    top: 25%;
   }
 }
 
