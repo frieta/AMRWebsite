@@ -145,27 +145,31 @@ document.addEventListener('DOMContentLoaded', () => {
   const hamburger = document.querySelector('.hamburger');
   const mainNav = document.querySelector('.main-nav');
   if (hamburger && mainNav) {
-    hamburger.addEventListener('click', () => {
+    // Toggle menu on hamburger click
+    hamburger.addEventListener('click', (e) => {
+      e.stopPropagation();
       hamburger.classList.toggle('open');
       mainNav.classList.toggle('open');
     });
-    // Close on outside click
-    document.addEventListener('click', (e) => {
-      if (!header.contains(e.target) && !mainNav.contains(e.target)) {
+    
+    // Close menu when clicking on nav links
+    mainNav.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        // Allow the link to navigate before closing menu
         hamburger.classList.remove('open');
         mainNav.classList.remove('open');
-      }
-    });
-    // Allow nav links to work by stopping propagation
-    mainNav.querySelectorAll('a').forEach(link => {
-      link.addEventListener('click', (e) => {
-        e.stopPropagation();
-        // Close menu after navigation
-        setTimeout(() => {
-          hamburger.classList.remove('open');
-          mainNav.classList.remove('open');
-        }, 0);
       });
+    });
+    
+    // Close when clicking outside header area
+    document.addEventListener('click', (e) => {
+      // Don't close if clicking on hamburger or nav itself
+      if (header.contains(e.target)) return;
+      // Don't close if clicking inside nav menu (except links which close it)
+      if (mainNav.contains(e.target) && !e.target.closest('a')) return;
+      
+      hamburger.classList.remove('open');
+      mainNav.classList.remove('open');
     });
   }
 

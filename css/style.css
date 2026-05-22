@@ -862,14 +862,19 @@ p { color: var(--text); font-size: 1rem; line-height: 1.8; }
   flex-direction: column;
   gap: 5px;
   cursor: pointer;
-  padding: 0.5rem;
+  padding: 0.75rem;
   background: none;
   border: none;
+  min-width: 48px;
+  min-height: 48px;
+  align-items: center;
+  justify-content: center;
+  touch-action: manipulation;
 }
 .hamburger span {
   display: block;
   width: 24px;
-  height: 2px;
+  height: 2.5px;
   background: var(--primary);
   border-radius: 2px;
   transition: all var(--transition);
@@ -2046,7 +2051,7 @@ p { color: var(--text); font-size: 1rem; line-height: 1.8; }
     background: var(--white);
     border-top: 1px solid var(--border);
     box-shadow: var(--shadow-md);
-    padding: 1rem;
+    padding: 0;
     transform: translateY(-10px);
     opacity: 0;
     pointer-events: none;
@@ -2054,14 +2059,44 @@ p { color: var(--text); font-size: 1rem; line-height: 1.8; }
     z-index: 1200;
     max-height: calc(100vh - 76px);
     overflow-y: auto;
+    overflow-x: hidden;
     -webkit-overflow-scrolling: touch;
   }
   .main-nav.open { transform: translateY(0); opacity: 1; pointer-events: all; }
-  .main-nav ul { flex-direction: column; gap: 0; width: 100%; }
+  .main-nav ul { 
+    flex-direction: column; 
+    gap: 0; 
+    width: 100%; 
+    margin: 0; 
+    padding: 0.5rem 0;
+  }
+  .main-nav li {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
   .main-nav a {
-    padding: 0.875rem 1rem;
-    border-radius: var(--radius);
+    display: block;
+    padding: 1rem 1.5rem;
+    border-radius: 0;
     width: 100%;
+    font-weight: 500;
+    color: var(--text);
+    transition: all 0.2s ease;
+    border-left: 4px solid transparent;
+    text-decoration: none;
+  }
+  .main-nav a:hover,
+  .main-nav a:active {
+    background: var(--off-white);
+    border-left-color: var(--primary);
+    color: var(--primary);
+  }
+  .main-nav a.active {
+    background: var(--off-white);
+    border-left-color: var(--primary);
+    color: var(--primary);
+    font-weight: 600;
   }
   .hero-inner { grid-template-columns: 1fr; text-align: center; }
   .hero-actions { justify-content: center; }
@@ -2556,3 +2591,72 @@ p { color: var(--text); font-size: 1rem; line-height: 1.8; }
 }
 .cert-display .cert-items::-webkit-scrollbar { display: none; }
 
+/* ============================================
+   MOBILE TOUCH OPTIMIZATIONS (Ultra-Mobile)
+   ============================================ */
+@media (max-width: 480px) {
+  /* Better touch targets for all interactive elements */
+  button, a, input[type="button"], input[type="submit"] {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  
+  /* Optimize nav link touch area */
+  .main-nav a {
+    padding: 1.25rem 1.5rem;
+    min-height: 56px;
+    display: flex;
+    align-items: center;
+  }
+  
+  /* Ensure hamburger is easily tappable */
+  .hamburger {
+    min-width: 54px;
+    min-height: 54px;
+    padding: 1rem;
+  }
+  
+  /* Improve form element spacing */
+  .form-group {
+    margin-bottom: 1.5rem;
+  }
+  
+  .form-group label {
+    display: block;
+    margin-bottom: 0.75rem;
+  }
+  
+  .form-group input,
+  .form-group textarea,
+  .form-group select {
+    padding: 0.875rem 1rem;
+    min-height: 44px;
+    font-size: 16px;
+  }
+  
+  /* Better button spacing */
+  .btn {
+    min-height: 44px;
+    padding: 0.875rem 1.5rem;
+    font-size: 1rem;
+  }
+  
+  /* Improve link hover states for touch devices */
+  .main-nav a {
+    -webkit-tap-highlight-color: transparent;
+  }
+}
+
+/* ============================================
+   TABLET OPTIMIZATIONS (480px - 768px)
+   ============================================ */
+@media (min-width: 481px) and (max-width: 768px) {
+  .main-nav a {
+    padding: 1rem 1.5rem;
+    min-height: 48px;
+  }
+  
+  button, a, input[type="button"], input[type="submit"] {
+    min-height: 44px;
+  }
+}
