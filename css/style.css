@@ -223,6 +223,11 @@ body.modal-open { overflow: hidden; }
     height: 38px;
     font-size: 1.5rem;
   }
+  .equipment-modal-prev,
+  .equipment-modal-next {
+    left: auto;
+    right: 0.85rem;
+  }
 }
 
 @media (max-width: 768px) {
@@ -244,8 +249,12 @@ body.modal-open { overflow: hidden; }
   .equipment-slider-stage .equipment-slide {
     flex-basis: 86vw !important;
     height: 360px !important;
+  .equipment-modal-next {
+    top: calc(0.85rem + 38px + 2rem);
   }
-  .equipment-slider-stage .equipment-slide-content {
+  .equipment-modal-prev {
+    top: calc(0.85rem + 38px + 2rem + 46px + 0.85rem);
+  }
     left: 0.85rem !important;
     right: 0.85rem !important;
     bottom: 0.85rem !important;
