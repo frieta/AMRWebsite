@@ -728,9 +728,11 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  /* // --- Floating Messenger Chat Widget ---
-  const existingChatWidget = document.querySelector('.chat-widget');
-  if (!existingChatWidget) {
+  // --- Floating Messenger Chat Widget (temporarily disabled) ---
+  const ENABLE_FLOATING_CHAT_WIDGET = false;
+  if (ENABLE_FLOATING_CHAT_WIDGET) {
+    const existingChatWidget = document.querySelector('.chat-widget');
+    if (!existingChatWidget) {
     const chatWidget = document.createElement('div');
     chatWidget.className = 'chat-widget';
     chatWidget.innerHTML = `
@@ -787,13 +789,13 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
 
-    document.addEventListener('click', (event) => {
-      if (!chatWidget.classList.contains('open')) return;
-      if (!chatPanel.contains(event.target) && !chatFab.contains(event.target)) {
-        closeChatWidget();
-      }
-    });
+      document.addEventListener('click', (event) => {
+        if (!chatWidget.classList.contains('open')) return;
+        if (!chatPanel.contains(event.target) && !chatFab.contains(event.target)) {
+          closeChatWidget();
+        }
+      });
+    }
   }
 
 });
- */
