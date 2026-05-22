@@ -156,6 +156,12 @@ document.addEventListener('DOMContentLoaded', () => {
         mainNav.classList.remove('open');
       }
     });
+    // Allow nav links to work by stopping propagation
+    mainNav.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.stopPropagation();
+      });
+    });
   }
 
   // --- Active Nav Link ---
