@@ -151,7 +151,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     // Close on outside click
     document.addEventListener('click', (e) => {
-      if (!header.contains(e.target)) {
+      if (!header.contains(e.target) && !mainNav.contains(e.target)) {
         hamburger.classList.remove('open');
         mainNav.classList.remove('open');
       }
