@@ -144,26 +144,21 @@ document.addEventListener('DOMContentLoaded', () => {
   // --- Mobile Nav Toggle ---
   const hamburger = document.querySelector('.hamburger');
   const mainNav = document.querySelector('.main-nav');
-  const chatWidget = document.querySelector('.chat-widget');
   
   if (hamburger && mainNav) {
     // Function to close menu
     const closeMenu = () => {
       hamburger.classList.remove('open');
       mainNav.classList.remove('open');
-      // Re-enable chat widget when menu closes
-      if (!document.querySelector('.chat-widget') && ENABLE_FLOATING_CHAT_WIDGET) {
-        createChatWidget();
-      }
     };
     
     // Function to open menu
     const openMenu = () => {
       hamburger.classList.add('open');
       mainNav.classList.add('open');
-      // Disable chat widget when menu opens on mobile
-      if (window.innerWidth <= 768) {
-        destroyChatWidget();
+      const existingChatWidget = document.querySelector('.chat-widget');
+      if (existingChatWidget) {
+        existingChatWidget.classList.remove('open');
       }
     };
     
@@ -804,14 +799,189 @@ document.addEventListener('DOMContentLoaded', () => {
     const chatPanel = chatWidget.querySelector('.chat-widget-panel');
     const chatFab = chatWidget.querySelector('.chat-widget-fab');
     const chatClose = chatWidget.querySelector('.chat-widget-close');
+    let isDraggingFab = false;
+    let suppressFabToggle = false;
+    let dragStartX = 0;
+    let dragStartY = 0;
+    let dragStartLeft = 0;
+    let dragStartTop = 0;
+    let snapAnimationFrameId = 0;
 
     const closeChatWidget = () => {
       chatWidget.classList.remove('open');
     };
 
-    chatFab.addEventListener('click', () => {
+    const updateChatWidgetPlacement = () => {
+      const fabRect = chatFab.getBoundingClientRect();
+      const fabCenterX = fabRect.left + (fabRect.width / 2);
+      const shouldOpenRight = fabCenterX < (window.innerWidth / 2);
+      chatWidget.classList.toggle('chat-widget--left', shouldOpenRight);
+      chatWidget.classList.toggle('chat-widget--right', !shouldOpenRight);
+
+      const panelRect = chatPanel.getBoundingClientRect();
+      const styles = window.getComputedStyle(chatWidget);
+      const gap = parseFloat(styles.gap || '0') || 0;
+      const requiredVerticalSpace = panelRect.height + gap;
+      const availableAbove = fabRect.top;
+      const availableBelow = window.innerHeight - fabRect.bottom;
+
+      const shouldOpenDown = requiredVerticalSpace > availableAbove && availableBelow >= availableAbove;
+      chatWidget.classList.toggle('chat-widget--panel-down', shouldOpenDown);
+      chatWidget.classList.toggle('chat-widget--panel-up', !shouldOpenDown);
+    };
+
+    const setChatWidgetPosition = (left, top) => {
+      chatWidget.style.left = `${left}px`;
+      chatWidget.style.top = `${top}px`;
+      chatWidget.style.right = 'auto';
+      chatWidget.style.bottom = 'auto';
+      updateChatWidgetPlacement();
+    };
+
+    const getDragSafeInsets = (padding = 8) => {
+      const headerBottom = header ? header.getBoundingClientRect().bottom : 0;
+      return {
+        top: Math.max(padding, headerBottom + padding),
+        right: padding,
+        bottom: padding,
+        left: padding,
+      };
+    };
+
+    const getFabConstrainedBounds = (padding = 0) => {
+      const widgetRect = chatWidget.getBoundingClientRect();
+      const fabRect = chatFab.getBoundingClientRect();
+      const fabOffsetLeft = fabRect.left - widgetRect.left;
+      const fabOffsetTop = fabRect.top - widgetRect.top;
+      const insets = getDragSafeInsets(padding);
+
+      return {
+        minLeft: insets.left - fabOffsetLeft,
+        maxLeft: window.innerWidth - insets.right - fabRect.width - fabOffsetLeft,
+        minTop: insets.top - fabOffsetTop,
+        maxTop: window.innerHeight - insets.bottom - fabRect.height - fabOffsetTop,
+      };
+    };
+
+    const clampChatWidgetPosition = (left, top, padding = 0) => {
+      const bounds = getFabConstrainedBounds(padding);
+      return {
+        left: Math.min(Math.max(bounds.minLeft, left), bounds.maxLeft),
+        top: Math.min(Math.max(bounds.minTop, top), bounds.maxTop),
+      };
+    };
+
+    const animateChatWidgetPosition = (targetLeft, targetTop, duration = 180) => {
+      if (snapAnimationFrameId) {
+        cancelAnimationFrame(snapAnimationFrameId);
+        snapAnimationFrameId = 0;
+      }
+
+      const startRect = chatWidget.getBoundingClientRect();
+      const startLeft = startRect.left;
+      const startTop = startRect.top;
+      const deltaLeft = targetLeft - startLeft;
+      const deltaTop = targetTop - startTop;
+      const startTime = performance.now();
+
+      const step = (now) => {
+        const elapsed = now - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        setChatWidgetPosition(startLeft + (deltaLeft * eased), startTop + (deltaTop * eased));
+
+        if (progress < 1) {
+          snapAnimationFrameId = requestAnimationFrame(step);
+        } else {
+          snapAnimationFrameId = 0;
+          setChatWidgetPosition(targetLeft, targetTop);
+        }
+      };
+
+      snapAnimationFrameId = requestAnimationFrame(step);
+    };
+
+    const snapChatWidgetToEdge = () => {
+      const edgePadding = 8;
+      const bounds = getFabConstrainedBounds(edgePadding);
+      const fabRect = chatFab.getBoundingClientRect();
+      const fabCenterX = fabRect.left + (fabRect.width / 2);
+      const midpoint = window.innerWidth / 2;
+      const targetLeft = fabCenterX < midpoint ? bounds.minLeft : bounds.maxLeft;
+      const currentRect = chatWidget.getBoundingClientRect();
+      const clampedTop = Math.min(Math.max(bounds.minTop, currentRect.top), bounds.maxTop);
+      animateChatWidgetPosition(targetLeft, clampedTop);
+    };
+
+    chatFab.addEventListener('click', (event) => {
+      if (suppressFabToggle) {
+        event.preventDefault();
+        event.stopPropagation();
+        suppressFabToggle = false;
+        return;
+      }
+      updateChatWidgetPlacement();
       chatWidget.classList.toggle('open');
     });
+
+    chatFab.addEventListener('pointerdown', (event) => {
+      if (event.button !== undefined && event.button !== 0) return;
+      if (snapAnimationFrameId) {
+        cancelAnimationFrame(snapAnimationFrameId);
+        snapAnimationFrameId = 0;
+      }
+      const rect = chatWidget.getBoundingClientRect();
+      dragStartX = event.clientX;
+      dragStartY = event.clientY;
+      dragStartLeft = rect.left;
+      dragStartTop = rect.top;
+      isDraggingFab = false;
+      suppressFabToggle = false;
+      chatFab.setPointerCapture(event.pointerId);
+    });
+
+    chatFab.addEventListener('pointermove', (event) => {
+      if (!chatFab.hasPointerCapture(event.pointerId)) return;
+
+      const deltaX = event.clientX - dragStartX;
+      const deltaY = event.clientY - dragStartY;
+
+      if (!isDraggingFab && Math.hypot(deltaX, deltaY) < 6) return;
+
+      isDraggingFab = true;
+      suppressFabToggle = true;
+
+      const nextLeft = dragStartLeft + deltaX;
+      const nextTop = dragStartTop + deltaY;
+      const clamped = clampChatWidgetPosition(nextLeft, nextTop, 8);
+      setChatWidgetPosition(clamped.left, clamped.top);
+    });
+
+    chatFab.addEventListener('pointerup', (event) => {
+      if (chatFab.hasPointerCapture(event.pointerId)) {
+        chatFab.releasePointerCapture(event.pointerId);
+      }
+      if (isDraggingFab) {
+        snapChatWidgetToEdge();
+      }
+      isDraggingFab = false;
+    });
+
+    chatFab.addEventListener('pointercancel', (event) => {
+      if (chatFab.hasPointerCapture(event.pointerId)) {
+        chatFab.releasePointerCapture(event.pointerId);
+      }
+      isDraggingFab = false;
+    });
+
+    window.addEventListener('resize', () => {
+      if (!chatWidget.style.left || !chatWidget.style.top) return;
+      const currentRect = chatWidget.getBoundingClientRect();
+      const clamped = clampChatWidgetPosition(currentRect.left, currentRect.top, 8);
+      setChatWidgetPosition(clamped.left, clamped.top);
+    });
+
+    updateChatWidgetPlacement();
 
     chatClose.addEventListener('click', closeChatWidget);
 
@@ -827,14 +997,6 @@ document.addEventListener('DOMContentLoaded', () => {
         closeChatWidget();
       }
     });
-  };
-  
-  // Function to destroy chat widget
-  const destroyChatWidget = () => {
-    const chatWidget = document.querySelector('.chat-widget');
-    if (chatWidget) {
-      chatWidget.remove();
-    }
   };
   
   // Initialize chat widget on page load
