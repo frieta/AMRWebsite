@@ -572,7 +572,6 @@ document.addEventListener('DOMContentLoaded', () => {
       'Main Manufacturing Facility': {
         desc: 'Production floor designed with GMP compliance and controlled workflow.',
         details: [
-          'Production capacity: 10,000–20,000 pieces per 8 hours (varies by product)',
           'Controlled personnel flow pathways to prevent contamination',
           'Dedicated material receiving, quarantine, and release zones',
           'Equipment layout optimized for GMP-compliant manufacturing',
