@@ -579,7 +579,7 @@ document.addEventListener('DOMContentLoaded', () => {
         ]
       },
       'Quality Control Laboratory': {
-        desc: 'Advanced testing facilities for microbiology, physicochemical, and organoleptic analysis.',
+        desc: 'Quality is at the heart of what we do. Our Quality Control Laboratory carefully monitors and evaluates products at every stage of production to help ensure consistency, safety, and reliability for our clients and their customers.',
         details: [
           'Microbiology lab with biosafety cabinets and annually calibrated autoclaves',
           'Physicochemical lab with calibrated instruments for pH, viscosity, and conductivity',
@@ -681,6 +681,131 @@ document.addEventListener('DOMContentLoaded', () => {
       if (e.key === 'Escape') closeVicinityModal();
       if (e.key === 'ArrowRight') openVicinityModalByIndex(activeVicinityIndex + 1);
       if (e.key === 'ArrowLeft') openVicinityModalByIndex(activeVicinityIndex - 1);
+    });
+
+    // --- Gallery Modal (nested photo gallery) ---
+    const galleryModal = document.getElementById('galleryModal');
+    const galleryMainImage = document.getElementById('galleryMainImage');
+    const galleryThumbnails = document.getElementById('galleryThumbnails');
+    const galleryModalTitle = document.getElementById('galleryModalTitle');
+    const viewMorePhotosBtn = document.getElementById('viewMorePhotosBtn');
+
+    let currentGalleryPhotos = [];
+    let currentGalleryIndex = 0;
+    let currentFacilityName = '';
+
+    const facilityImageFolders = {
+      'Main Manufacturing Facility': 'images/Index/main_facility/',
+      'Quality Control Laboratory': 'images/Index/quality_control_lab/',
+      'Production Area': 'images/Index/production_area/',
+      'Warehouse & Storage': 'images/Index/warehouse/',
+      'Office & Conference Spaces': 'images/Index/office_spaces/'
+    };
+
+    const facilityImages = {
+      'Main Manufacturing Facility': ['1.jpg'],
+      'Quality Control Laboratory': ['quality_control_lab.jpg'],
+      'Production Area': ['production_area.jpg'],
+      'Warehouse & Storage': ['1.jpg', '2.jpg', '3.jpg', '4.jpg', '5.jpg'],
+      'Office & Conference Spaces': ['office_spaces.jpg']
+    };
+
+    const closeGalleryModal = () => {
+      if (!galleryModal) return;
+      galleryModal.classList.remove('open');
+    };
+
+    const openGalleryModal = (facilityName) => {
+      if (!galleryModal) return;
+      currentFacilityName = facilityName;
+      currentGalleryPhotos = facilityImages[facilityName] || [];
+
+      if (currentGalleryPhotos.length === 0) return;
+
+      currentGalleryIndex = 0;
+      galleryModalTitle.textContent = `${facilityName} - Photo Gallery`;
+      
+      // Build thumbnails
+      galleryThumbnails.innerHTML = '';
+      const folderPath = facilityImageFolders[facilityName];
+      
+      currentGalleryPhotos.forEach((photo, index) => {
+        const thumbBtn = document.createElement('button');
+        thumbBtn.type = 'button';
+        thumbBtn.className = `gallery-thumb ${index === 0 ? 'active' : ''}`;
+        thumbBtn.innerHTML = `<img src="${folderPath}${photo}" alt="Photo ${index + 1}" loading="lazy" />`;
+        thumbBtn.addEventListener('click', () => {
+          currentGalleryIndex = index;
+          updateGalleryDisplay();
+        });
+        galleryThumbnails.appendChild(thumbBtn);
+      });
+
+      updateGalleryDisplay();
+      galleryModal.classList.add('open');
+    };
+
+    const updateGalleryDisplay = () => {
+      if (currentGalleryPhotos.length === 0) return;
+      const folderPath = facilityImageFolders[currentFacilityName];
+      galleryMainImage.src = folderPath + currentGalleryPhotos[currentGalleryIndex];
+      
+      // Update active thumbnail
+      const thumbs = galleryThumbnails.querySelectorAll('.gallery-thumb');
+      thumbs.forEach((thumb, index) => {
+        thumb.classList.toggle('active', index === currentGalleryIndex);
+      });
+    };
+
+    if (viewMorePhotosBtn) {
+      viewMorePhotosBtn.addEventListener('click', () => {
+        const title = vicinityModalTitle.textContent;
+        if (title && facilityImages[title]) {
+          openGalleryModal(title);
+        }
+      });
+    }
+
+    // Gallery navigation
+    const galleryNavPrev = galleryModal ? galleryModal.querySelector('.gallery-nav-prev') : null;
+    const galleryNavNext = galleryModal ? galleryModal.querySelector('.gallery-nav-next') : null;
+    const galleryCloseBtn = galleryModal ? galleryModal.querySelector('.gallery-modal-close') : null;
+    const galleryBackdrop = galleryModal ? galleryModal.querySelector('.gallery-modal-backdrop') : null;
+
+    if (galleryNavPrev) {
+      galleryNavPrev.addEventListener('click', () => {
+        currentGalleryIndex = (currentGalleryIndex - 1 + currentGalleryPhotos.length) % currentGalleryPhotos.length;
+        updateGalleryDisplay();
+      });
+    }
+
+    if (galleryNavNext) {
+      galleryNavNext.addEventListener('click', () => {
+        currentGalleryIndex = (currentGalleryIndex + 1) % currentGalleryPhotos.length;
+        updateGalleryDisplay();
+      });
+    }
+
+    if (galleryCloseBtn) {
+      galleryCloseBtn.addEventListener('click', closeGalleryModal);
+    }
+
+    if (galleryBackdrop) {
+      galleryBackdrop.addEventListener('click', closeGalleryModal);
+    }
+
+    // Keyboard navigation for gallery
+    document.addEventListener('keydown', (e) => {
+      if (!galleryModal || !galleryModal.classList.contains('open')) return;
+      if (e.key === 'Escape') closeGalleryModal();
+      if (e.key === 'ArrowRight') {
+        currentGalleryIndex = (currentGalleryIndex + 1) % currentGalleryPhotos.length;
+        updateGalleryDisplay();
+      }
+      if (e.key === 'ArrowLeft') {
+        currentGalleryIndex = (currentGalleryIndex - 1 + currentGalleryPhotos.length) % currentGalleryPhotos.length;
+        updateGalleryDisplay();
+      }
     });
   }
 
