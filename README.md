@@ -77,3 +77,61 @@ If you add images or make structural changes, update `README.md` and the relevan
 
 ---
 Generated update: 2026-05-26 — concise summary of recent front-end changes and testing steps.
+
+## Detailed Code Scan (2026-05-26)
+
+Summary of what I found when scanning the codebase (pages, CSS, and JS):
+
+- `index.html`:
+  - Includes a cookie banner element with id `npc-cookie-banner` and responsive styles embedded in the page.
+  - Vercel analytics script is referenced (`/_vercel/insights/script.js`).
+  - Hero uses local images under `images/Index/` and a timed hero / mini-card stack implemented in the DOM.
+  - Navigation and header markup are consistent with other pages.
+
+- `about.html`:
+  - Standard company story, vision & mission, and footer links. Uses `css/style.css` and `js/main.js`.
+
+- `services.html`:
+  - Services and 7-step ODM process documented on the page.
+  - The heart emoji was replaced by an icon image `images/icons/heart.ico`.
+
+- `products.html`:
+  - Catalog of product categories and tags. Static content rendered as product sections.
+
+- `quality.html`:
+  - Vicinity slider (facility slides) and a vicinity modal (`#vicinityModal`) are present.
+  - A nested `#galleryModal` is implemented (gallery modal panel, thumbnails, prev/next controls).
+  - Gallery is wired to specific folders via mappings in `js/main.js` (see below).
+
+- `contact.html`:
+  - Contact form posts to Web3Forms (`https://api.web3forms.com/submit`) with an `access_key` set on the page.
+  - Embedded responsive Google Maps iframe present.
+  - The header CTA "Partner With Us" is hidden (inline `style="display:none;"`).
+
+- `css/style.css`:
+  - Chat widget styles live here (`.chat-widget`, `.chat-widget-panel`, `.chat-widget-fab`) with z-index and pointer-events handling.
+  - Vicinity/equipment sliders converted to horizontal scroll galleries.
+  - Gallery modal styles (panel, backdrop, thumbnails) included in page-level styles for `quality.html` as well.
+
+- `js/main.js`:
+  - Theme and CSS variable helpers, sticky header, mobile nav toggle, and intersection-observer animations.
+  - Mobile nav toggling was updated to close the chat widget rather than removing it from DOM.
+  - Floating chat widget implementation present:
+    - Feature flag: `ENABLE_FLOATING_CHAT_WIDGET = true`.
+    - `createChatWidget()` mounts a `.chat-widget` with a draggable FAB, pointer capture drag handlers, clamp-to-viewport, snap-to-edge animation, and logic that opens the panel inward depending on FAB position.
+  - Gallery mappings (used by the Quality page nested gallery):
+    - `facilityImageFolders` maps facility names to folder paths (for example `"Warehouse & Storage": "images/Index/warehouse/"`).
+    - `facilityImages` maps facility names to filename arrays (e.g. `['1.jpg','2.jpg','3.jpg','4.jpg','5.jpg']` for the warehouse).
+  - Contact form client-side submit UI feedback is implemented (button text change and local reset).
+
+## Notes & Recommendations
+
+- Image manifest: gallery images are mapped manually inside `js/main.js` (`facilityImages`). If you expect to add photos frequently, consider adding a small manifest generator (build step) or a server-side endpoint to auto-list folder contents.
+- Persistence: the floating FAB position is not persisted across page loads — persisting to `localStorage` would improve UX.
+- Analytics: the pages include Vercel analytics; if you deploy elsewhere or strip analytics for local dev, update or guard the script include.
+
+If you want, I can:
+- add a small Node/PHP script to auto-generate a JSON manifest of `images/Index/*` folders, or
+- persist FAB position in `localStorage`, or
+- open a PR-style patch that extracts gallery mapping into a single `gallery-manifest.json` file and updates `js/main.js` to read it.
+
