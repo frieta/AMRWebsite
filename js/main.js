@@ -141,6 +141,72 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('scroll', onScroll, { passive: true });
   }
 
+  // --- Share Menu Toggle ---
+  const shareMenuContainer = document.querySelector('.share-menu-container');
+  const shareMenuBtn = document.querySelector('.share-menu-btn');
+  const shareMenuPanel = document.querySelector('.share-menu-panel');
+  const shareMenuClose = document.querySelector('.share-menu-close');
+  const copyLinkBtn = document.getElementById('copyLinkBtn');
+
+  if (shareMenuBtn && shareMenuPanel) {
+    const closeShareMenu = () => {
+      shareMenuContainer.classList.remove('open');
+      shareMenuBtn.classList.remove('active');
+    };
+
+    const openShareMenu = (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      shareMenuContainer.classList.add('open');
+      shareMenuBtn.classList.add('active');
+    };
+
+    shareMenuBtn.addEventListener('click', (e) => {
+      if (shareMenuContainer.classList.contains('open')) {
+        closeShareMenu();
+      } else {
+        openShareMenu(e);
+      }
+    });
+
+    if (shareMenuClose) {
+      shareMenuClose.addEventListener('click', closeShareMenu);
+    }
+
+    // Close menu when clicking outside
+    document.addEventListener('click', (e) => {
+      if (shareMenuContainer && !shareMenuContainer.contains(e.target)) {
+        if (shareMenuContainer.classList.contains('open')) {
+          closeShareMenu();
+        }
+      }
+    });
+
+    // Copy link to clipboard
+    if (copyLinkBtn) {
+      copyLinkBtn.addEventListener('click', () => {
+        const url = window.location.href;
+        navigator.clipboard.writeText(url).then(() => {
+          const originalText = copyLinkBtn.querySelector('span:last-child');
+          const originalContent = originalText.textContent;
+          originalText.textContent = 'Copied!';
+          setTimeout(() => {
+            originalText.textContent = originalContent;
+          }, 2000);
+        }).catch(() => {
+          alert('Failed to copy link');
+        });
+      });
+    }
+
+    // Close menu on Escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && shareMenuContainer.classList.contains('open')) {
+        closeShareMenu();
+      }
+    });
+  }
+
   // --- Mobile Nav Toggle ---
   const hamburger = document.querySelector('.hamburger');
   const mainNav = document.querySelector('.main-nav');

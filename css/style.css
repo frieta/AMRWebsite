@@ -30,6 +30,174 @@
 }
 
 /* ============================================
+   SHARE MENU
+   ============================================ */
+.share-menu-container {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.share-menu-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: var(--primary);
+  padding: 0.6rem 0.8rem;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+  pointer-events: auto;
+}
+
+.share-menu-btn:hover,
+.share-menu-btn.active {
+  background: rgba(90, 170, 30, 0.1);
+  color: var(--primary-dark);
+}
+
+.share-menu-btn span:first-child {
+  font-size: 1.1rem;
+}
+
+.share-menu-label {
+  display: none;
+}
+
+@media (min-width: 769px) {
+  .share-menu-label {
+    display: inline;
+  }
+  .share-menu-btn {
+    padding: 0.6rem 1rem;
+  }
+}
+
+.share-menu-panel {
+  position: absolute;
+  top: calc(100% + 0.75rem);
+  right: 0;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 22px;
+  box-shadow: var(--shadow-lg);
+  overflow: hidden;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px) scale(0.95);
+  transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s ease;
+  z-index: -1;
+  pointer-events: none;
+  min-width: 220px;
+}
+
+.share-menu-container.open .share-menu-panel {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0) scale(1);
+  z-index: 9999;
+  pointer-events: auto;
+}
+
+.share-menu-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1rem 0.75rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.share-menu-title {
+  margin: 0;
+  font-size: 0.95rem;
+  color: var(--primary);
+  font-weight: 700;
+  line-height: 1;
+}
+
+.share-menu-close {
+  width: 32px;
+  height: 32px;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--text);
+  font-size: 1.4rem;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.share-menu-close:hover {
+  background: var(--light-gray);
+  color: var(--primary);
+}
+
+.share-menu-body {
+  padding: 0.75rem;
+  display: grid;
+  gap: 0.5rem;
+}
+
+.share-menu-link {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 0.75rem 1rem;
+  text-decoration: none;
+  color: var(--text);
+  border: none;
+  background: transparent;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.share-menu-link:hover {
+  background: rgba(90, 170, 30, 0.08);
+  color: var(--primary);
+  transform: translateX(3px);
+}
+
+.share-icon {
+  min-width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1rem;
+  background: rgba(90, 170, 30, 0.1);
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+
+.share-menu-link:hover .share-icon {
+  background: rgba(90, 170, 30, 0.2);
+}
+
+@media (max-width: 768px) {
+  .share-menu-panel {
+    right: auto;
+    left: 50%;
+    transform: translateX(-50%) translateY(-10px) scale(0.95);
+  }
+  .share-menu-container.open .share-menu-panel {
+    transform: translateX(-50%) translateY(0) scale(1);
+  }
+}
+
+/* ============================================
    FLOATING CHAT WIDGET
    ============================================ */
 .chat-widget {
