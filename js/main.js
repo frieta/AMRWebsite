@@ -973,7 +973,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <div class="chat-widget-bubble chat-widget-bubble--bridge">
             Tap below to open a conversation with our Page in Messenger.
             <div style="margin-top:0.8rem;">
-              <a class="chat-widget-link" href="https://m.me/AMRietaLaboratory" target="_blank" rel="noopener noreferrer">Open Messenger chat</a>
+              <a class="chat-widget-link" href="https://m.me/amrietacorporation" target="_blank" rel="noopener noreferrer">Open Messenger chat</a>
             </div>
           </div>
           <p class="chat-widget-note">You'll be routed straight to the Page conversation thread.</p>
