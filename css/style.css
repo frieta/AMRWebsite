@@ -1752,7 +1752,7 @@ p { color: var(--text); font-size: 1rem; line-height: 1.8; }
 .category-icon {
   width: 52px;
   height: 52px;
-  background: var(--primary);
+  background: var(--accent);
   border-radius: 12px;
   display: flex;
   align-items: center;
