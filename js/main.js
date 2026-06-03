@@ -770,10 +770,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const facilityImages = {
       'Main Manufacturing Facility': ['1.jpg'],
-      'Quality Control Laboratory': ['quality_control_lab.jpg'],
-      'Production Area': ['production_area.jpg'],
+      'Quality Control Laboratory': ['1.PNG', '2.PNG', '3.PNG'],
+      'Production Area': ['1.PNG', '2.PNG', '3.PNG', '4.PNG', '5.PNG'],
       'Warehouse & Storage': ['1.jpg', '2.jpg', '3.jpg', '4.jpg', '5.jpg'],
-      'Office & Conference Spaces': ['office_spaces.jpg']
+      'Office & Conference Spaces': ['1.PNG', '2.PNG', '3.PNG']
     };
 
     const closeGalleryModal = () => {
